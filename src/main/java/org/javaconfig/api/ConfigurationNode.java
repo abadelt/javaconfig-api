@@ -14,11 +14,26 @@ package org.javaconfig.api;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+/**
+ * Models a node within the current configuration tree.
+ * 
+ * @author Anatole Tresch
+ */
 public interface ConfigurationNode {
-
+	/**
+	 * Access the scopes, that are represented by this given node.
+	 * 
+	 * @return the current nodes, which are currently working for.
+	 */
 	public List<Scope> getScopes();
-	
+
+	/**
+	 * The (partial) path name of the node, never {@code null}.
+	 * 
+	 * @return the path name.
+	 */
 	public String getName();
 
 	public List<ConfigurationNode> getChildNodes();
@@ -29,60 +44,82 @@ public interface ConfigurationNode {
 
 	public boolean isNodePresent(String key);
 
-	public boolean isKeyPresent(String key);
+	public boolean isPropertyPresent(String key);
 
-	public List<ConfigEntry> getAttributes();
+	public List<ConfigEntry> getProperties();
 
-	public ConfigEntry getDetailed(String key);
+	public ConfigEntry getPropertyEntry(String key);
 
-	public String getText(String key);
+	public Class getPropertyType(String key);
 
-	public String getText(String key, String defaultValue);
+	public String getTextProperty(String key);
 
-	public Boolean getBoolean(String key);
+	public String getTextProperty(String key, String defaultValue);
 
-	public Boolean getBoolean(String key, Boolean defaultValue);
+	public Boolean getBooleanProperty(String key);
 
-	public Byte getByte(String key);
+	public Boolean getBooleanProperty(String key, Boolean defaultValue);
 
-	public Byte getByte(String key, Byte defaultValue);
+	public Byte getByteProperty(String key);
 
-	public Short getShort(String key);
+	public Byte getByteProperty(String key, Byte defaultValue);
 
-	public Short getShort(String key, Short defaultValue);
+	public Short getShortProperty(String key);
 
-	public Integer getInt(String key);
+	public Short getShortProperty(String key, Short defaultValue);
 
-	public Integer getInt(String key, Integer defaultValue);
+	public Integer getIntProperty(String key);
 
-	public Long getLong(String key);
+	public Integer getIntProperty(String key, Integer defaultValue);
 
-	public Long getLong(String key, Long defaultValue);
+	public Long getLongProperty(String key);
 
-	public Float getFloat(String key);
+	public Long getLongProperty(String key, Long defaultValue);
 
-	public Float getFloat(String key, Float defaultValue);
+	public Float getFloatProperty(String key);
 
-	public Double getDouble(String key);
+	public Float getFloatProperty(String key, Float defaultValue);
+
+	public Double getDoubleProperty(String key);
 
 	public Double getDouble(String key, Double defaultValue);
 
-	public <T> T get(String key, Class<T> type);
+	public <T> T getProperty(String key, Class<T> type);
 
-	public <T> T get(String key, Class<T> type, T defaultValue);
+	public <T> T getProperty(String key, Class<T> type, T defaultValue);
 
-	public <T> T get(String key, Class<T> type, Converter converter);
+	public <T> T getProperty(String key, Class<T> type, Converter converter);
 
-	public <T> T get(String key, Class<T> type, T defaultValue,
+	public <T> T getProperty(String key, Class<T> type, T defaultValue,
 			Converter converter);
 
-	public Map<String, String> getMap(String key);
+	public Map<String, String> getMapProperty(String key);
 
-	public Map<String, String> getMap(String key,
+	public Map<String, String> getMapProperty(String key,
 			Map<String, String> defaultValue);
 
-	public <T> Map<String, T> getMap(String key, Class<T> type);
+	public <T> Map<String, T> getMapProperty(String key, Class<T> type);
 
-	public <T> Map<String, T> getMap(String key, Class<T> type,
+	public <T> Map<String, T> getMapProperty(String key, Class<T> type,
 			Map<String, T> defaultValue);
+
+	public List<String> getListProperty(String key);
+
+	public List<String> getListProperty(String key,
+			List<String> defaultValue);
+
+	public <T> List<T> getListProperty(String key, Class<T> type);
+
+	public <T> List<T> getListProperty(String key, Class<T> type,
+			List<T> defaultValue);
+
+	public Set<String> getSetProperty(String key);
+
+	public Set<String> getSetProperty(String key,
+			Set<String> defaultValue);
+
+	public <T> Set<T> getSetProperty(String key, Class<T> type);
+
+	public <T> Set<T> getSetProperty(String key, Class<T> type,
+			Set<T> defaultValue);
 }
