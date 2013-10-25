@@ -1,11 +1,15 @@
 package org.javaconfig.samples;
 
+import java.io.InputStream;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.javaconfig.api.ConfigService;
-import org.javaconfig.api.annot.ConfigScope;
+import org.javaconfig.api.annot.AggregateScope;
+import org.javaconfig.api.annot.ConfigFilter;
 import org.javaconfig.api.annot.Configured;
+import org.javaconfig.api.annot.Selector;
 
 /*
  * <pre>
@@ -29,20 +33,25 @@ import org.javaconfig.api.annot.Configured;
  * APP, DOMAIN, CLUSTER, VM </pre>
  */
 @Singleton
-@ConfigScope(value = "DOMAIN")
+@AggregateScope(AggregateScope.DOMAIN)
+@ConfigFilter(attributes = {
+		@Selector(key = "stage", value = "${STAGE}") })
 public class ConfiguredBean {
 
 	@Inject
 	private ConfigService configService;
 
-	@Configured("TEST")
-//	@ConfigScope(value = Scope.GLOBAL, attributes = {
-//			@Selector(key = "stage", value = "IT"),
-//			@Selector(key = "tier", value = "PT") })
+	@Configured
 	private String gValue;
 
-	@Configured("TEST")
-//	@NamedConfigScope(value = "MyCustomScope")
+	@Configured("testValue")
 	private String value;
+	
+	@Configured("number")
+	@ConfigFilter(scopes={"myOverridingScope", "!GLOBAL"})
+	private int myNum;
+	
+	@Configured("XML stream")
+	private InputStream myXmlConfig;
 
 }

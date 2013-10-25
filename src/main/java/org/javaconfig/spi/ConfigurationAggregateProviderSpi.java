@@ -13,7 +13,7 @@ package org.javaconfig.spi;
 
 import java.util.Collection;
 
-import org.javaconfig.api.AggregateScope;
+import org.javaconfig.api.AggregatedConfiguration;
 
 /**
  * This SPI allows to add additional scopes to the system.
@@ -22,5 +22,5 @@ import org.javaconfig.api.AggregateScope;
  */
 public interface ConfigurationAggregateProviderSpi {
 
-	Collection<AggregateScope> getScopes();
+	Collection<AggregatedConfiguration> getAggregates();
 }

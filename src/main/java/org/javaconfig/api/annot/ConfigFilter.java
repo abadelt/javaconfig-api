@@ -18,10 +18,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-//
-//@Retention(RetentionPolicy.RUNTIME)
-//@Target(value = { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
-//public @interface NamedConfigScope {
-//	String value();
-//	Selector[] attributes() default {};
-//}
+@Retention(RetentionPolicy.RUNTIME)
+@Target(value = { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
+public @interface ConfigFilter {
+	String[] scopes() default {};
+	Selector[] attributes() default {};
+}

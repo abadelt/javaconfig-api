@@ -15,7 +15,7 @@ package org.javaconfig.spi;
 
 import java.util.Collection;
 
-import org.javaconfig.api.SingleScope;
+import org.javaconfig.api.Scope;
 
 /**
  * This SPI allows to add additional scopes to the system.
@@ -23,5 +23,5 @@ import org.javaconfig.api.SingleScope;
  */
 public interface ConfigurationScopeProviderSpi {
 
-	Collection<SingleScope> getScopes();
+	Collection<Scope> getScopes();
 }

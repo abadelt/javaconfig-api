@@ -25,7 +25,7 @@ public final class ConfigReadResult {
 
 	private String readerId;
 	private String sourceExpression;
-	private long configReadTS = System.currentTimeMillis();
-	private List<ConfigEntry> configuration;
+	private long configReadDT = System.currentTimeMillis();
+	private List<ConfigEntry> entries;
 	private List<Exception> errors;
 }

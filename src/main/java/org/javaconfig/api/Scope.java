@@ -37,7 +37,7 @@ package org.javaconfig.api;
  * 
  * @author Anatole Tresch
  */
-public interface SingleScope {
+public interface Scope {
 	/**
 	 * Returns the unique name of a scope.
 	 * 
@@ -46,17 +46,27 @@ public interface SingleScope {
 	public String getName();
 
 	/**
-	 * Gets the scopes overall priority.
-	 * 
-	 * @return the scopes priority.
-	 */
-	public int getPriority();
-
-	/**
 	 * Accessor called to determine if a scope is available within the current
 	 * context.
 	 * 
 	 * @return true, if the scope is available in the current context.
 	 */
 	public boolean isActive();
+
+	/**
+	 * Method allows to determine if a scope is contextual. Configuration of
+	 * contextual scopes are accessed whenever they are needed.
+	 * 
+	 * @return true, if this scope is contextual.
+	 */
+	public boolean isContextual();
+
+	/**
+	 * Reads/evaluates the configuration for this scope. Hereby configuration
+	 * for non contextual scopes, is read only once.
+	 * 
+	 * @return the scope's configuration, never {@code null}.
+	 */
+	public ConfigurationNode readConfiguration();
+	
 }

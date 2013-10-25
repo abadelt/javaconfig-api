@@ -9,17 +9,18 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.api.annot;
+package org.javaconfig.spi;
 
-// import java.lang.annotation.ElementType;
-//
-// @Retention(RetentionPolicy.RUNTIME)
-// @Target(value = { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
-// public @interface CombinedScope {
-//
-// Scope value() default Scope.DEPENDENT;
-//
-// public ConfigScope[] scopes();
-//
-// }
+import javax.inject.Scope;
 
+public interface ConfigResolverSpi {
+
+	/**
+	 * Read the configuration from the given source expression.
+	 * 
+	 * @param source
+	 *            the source expression, not null.
+	 * @return the configuration read, never {@code null}.
+	 */
+	String resolveConfig(String key, String value, Scope scope);
+}

@@ -15,19 +15,23 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public interface Configuration {
+public interface ConfigurationNode {
 
+	public List<Scope> getScopes();
+	
 	public String getName();
 
-	public List<Configuration> getChildConfigs();
+	public List<ConfigurationNode> getChildNodes();
 
-	public Configuration getConfiguration(String key);
+	public ConfigurationNode getNode(String key);
 
-	public Collection<Configuration> findConfiguration(String expression);
+	public Collection<ConfigurationNode> findNodes(String expression);
+
+	public boolean isNodePresent(String key);
+
+	public boolean isKeyPresent(String key);
 
 	public List<ConfigEntry> getAttributes();
-
-	public boolean isPresent(String key);
 
 	public ConfigEntry getDetailed(String key);
 

@@ -15,16 +15,16 @@ import java.util.Collection;
 
 public interface ConfigService {
 
-	Configuration getConfiguration(SingleScope scope);
+	ConfigurationNode getConfiguration(Scope scope);
 
-	Configuration getConfiguration(AggregateScope scope);
+	ConfigurationNode getConfiguration(AggregatedConfiguration scope);
 
-	Collection<SingleScope> getAvailableScopes();
+	Collection<Scope> getAvailableScopes();
 
-	Collection<AggregateScope> getAvailableAggregateScopes();
+	Collection<AggregatedConfiguration> getAvailableAggregateScopes();
 	
-	Collection<SingleScope> getDefinedScopes();
+	Collection<Scope> getDefinedScopes();
 
-	Collection<AggregateScope> getDefinedAggregateScopes();
+	Collection<AggregatedConfiguration> getDefinedAggregateScopes();
 
 }

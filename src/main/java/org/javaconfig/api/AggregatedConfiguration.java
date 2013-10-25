@@ -29,12 +29,12 @@ import java.util.List;
  * <p>
  * Aggregate Scopes model the levels of overrides required by the a
  * configuration type. New aggregate scopes can be defined, or additional
- * {@link SingleScope} instances can be added to existing aggregates.
+ * {@link Scope} instances can be added to existing aggregates.
  * <br/>
  * 
  * @author Anatole Tresch
  */
-public interface AggregateScope {
+public interface AggregatedConfiguration {
 	/**
 	 * Returns the unique name of a aggregate scope.
 	 * 
@@ -48,7 +48,7 @@ public interface AggregateScope {
 	 * 
 	 * @return the ordered list of aggregated scopes, never {@code null}.
 	 */
-	public List<SingleScope> getScopes();
+	public List<Scope> getScopes();
 
 	/**
 	 * Accessor called to determine if an aggregated scope is available within
