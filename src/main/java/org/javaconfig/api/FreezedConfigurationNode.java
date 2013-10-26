@@ -9,16 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.spi;
+package org.javaconfig.api;
 
-import java.util.ServiceLoader;
+import java.util.Map;
 
-/**
- * Marker interface for registering configuration extensions using the JDK
- * {@link ServiceLoader}.
- * 
- * @author Anatole Tresch
- */
-public interface ConfigurationExtension {
+public interface FreezedConfigurationNode extends Configuration {
+
+	long getFreezedAt();
+
+	Map<String, String> getContext();
 
 }
