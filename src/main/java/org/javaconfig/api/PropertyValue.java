@@ -13,7 +13,7 @@ package org.javaconfig.api;
 
 import java.util.Map;
 
-public class ConfigEntry {
+public class PropertyValue {
 	private String key;
 	private Object value;
 	private Class exposedType;

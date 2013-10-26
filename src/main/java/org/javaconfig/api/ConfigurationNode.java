@@ -36,20 +36,81 @@ public interface ConfigurationNode {
 	 */
 	public String getName();
 
+	/**
+	 * Access all child nodes.
+	 * 
+	 * @return the child nodes, never {@code null}.
+	 */
 	public List<ConfigurationNode> getChildNodes();
 
+	/**
+	 * Access a child node using either a
+	 * <ul>
+	 * <li>a direct child name, e.g. {@code mycomp}, or
+	 * <li>a relative path, e.g. {@code mycomp/foo/bar}, or
+	 * <li>an absolute path, e.g. {@code /myconfig/mycomp/foo/bar}.
+	 * </ul>
+	 * 
+	 * @param key
+	 *            the absolute or relative path
+	 * @return the child node found, or {@code null}.
+	 */
 	public ConfigurationNode getNode(String key);
 
+	/**
+	 * Access a child node using a path expression, e.g.
+	 * {@code myconfig/my*\/foo/bar}.
+	 * 
+	 * @param expression
+	 *            the node expression
+	 * @return the nodes found, never {@code null}.
+	 */
 	public Collection<ConfigurationNode> findNodes(String expression);
 
+	/**
+	 * Allows to evaluate if a node exists.
+	 * 
+	 * @param key
+	 *            the nodes absolute, or relative path.
+	 * @return {@code true}, if such a node exists.
+	 */
 	public boolean isNodePresent(String key);
 
+	/**
+	 * Allows to evaluate if a property exists.
+	 * 
+	 * @param key
+	 *            the property's absolute, or relative path, e.g. @code
+	 *            a/b/c/d.myProperty}.
+	 * @return {@code true}, if such a node exists.
+	 */
 	public boolean isPropertyPresent(String key);
 
-	public List<ConfigEntry> getProperties();
+	/**
+	 * Access all property entries attached to this configuration instance.
+	 * 
+	 * @return all entries, never {@code null}.
+	 */
+	public List<PropertyValue> getProperties();
 
-	public ConfigEntry getPropertyEntry(String key);
+	/**
+	 * Access a property entry.
+	 * 
+	 * @param key
+	 *            the property's absolute, or relative path, e.g. @code
+	 *            a/b/c/d.myProperty}.
+	 * @return the property entry, or {@code null}.
+	 */
+	public PropertyValue getPropertyEntry(String key);
 
+	/**
+	 * Get the property type.
+	 * 
+	 * @param key
+	 *            the property's absolute, or relative path, e.g. @code
+	 *            a/b/c/d.myProperty}.
+	 * @return
+	 */
 	public Class getPropertyType(String key);
 
 	public String getTextProperty(String key);

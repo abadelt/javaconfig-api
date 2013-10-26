@@ -13,7 +13,7 @@ package org.javaconfig.spi;
 
 import java.util.List;
 
-import org.javaconfig.api.ConfigEntry;
+import org.javaconfig.api.PropertyValue;
 
 /**
  * Result object returned by readers, that read configuration.
@@ -26,6 +26,6 @@ public final class ConfigReadResult {
 	private String readerId;
 	private String sourceExpression;
 	private long configReadDT = System.currentTimeMillis();
-	private List<ConfigEntry> entries;
+	private List<PropertyValue> entries;
 	private List<Exception> errors;
 }
