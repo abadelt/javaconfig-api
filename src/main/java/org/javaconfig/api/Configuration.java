@@ -11,10 +11,9 @@
  */
 package org.javaconfig.api;
 
-import java.util.List;
 
 /**
- * A aggregate scope identifies a a configuration set that is defined by
+ * A aggregate configuration identifies a a configuration set that is defined by
  * default. A aggregate scope is identified by a unique name. An aggregate scope
  * is only available when all containing scopes are available. Additionally the
  * ordering of scopes also models the override relatoinships between the config
@@ -29,27 +28,12 @@ import java.util.List;
  * <p>
  * Aggregate Scopes model the levels of overrides required by the a
  * configuration type. New aggregate scopes can be defined, or additional
- * {@link Scope} instances can be added to existing aggregates.
- * <br/>
+ * {@link Scope} instances can be added to existing aggregates. <br/>
  * 
  * @author Anatole Tresch
  */
-public interface AggregatedConfiguration {
-	/**
-	 * Returns the unique name of a aggregate scope.
-	 * 
-	 * @return The aggregate scope's name, never {@code null}.
-	 */
-	public String getName();
-
-	/**
-	 * Return the scopes aggregated in this instance, in the order of precedence
-	 * (the first are the weekest).
-	 * 
-	 * @return the ordered list of aggregated scopes, never {@code null}.
-	 */
-	public List<Scope> getScopes();
-
+public interface Configuration extends ConfigurationNode, Aggregate {
+	
 	/**
 	 * Accessor called to determine if an aggregated scope is available within
 	 * the current context. Aggregated scopes are only available, when all

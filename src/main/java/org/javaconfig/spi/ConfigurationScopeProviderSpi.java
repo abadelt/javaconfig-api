@@ -15,6 +15,7 @@ package org.javaconfig.spi;
 
 import java.util.Collection;
 
+import org.javaconfig.api.ConfigurationNode;
 import org.javaconfig.api.Scope;
 
 /**
@@ -24,4 +25,6 @@ import org.javaconfig.api.Scope;
 public interface ConfigurationScopeProviderSpi {
 
 	Collection<Scope> getScopes();
+	
+	ConfigurationNode readScope(Scope scope);
 }

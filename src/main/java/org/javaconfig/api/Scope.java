@@ -61,12 +61,4 @@ public interface Scope {
 	 */
 	public boolean isContextual();
 
-	/**
-	 * Reads/evaluates the configuration for this scope. Hereby configuration
-	 * for non contextual scopes, is read only once.
-	 * 
-	 * @return the scope's configuration, never {@code null}.
-	 */
-	public ConfigurationNode readConfiguration();
-	
 }

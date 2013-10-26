@@ -17,14 +17,18 @@ public interface ConfigService {
 
 	ConfigurationNode getConfiguration(Scope scope);
 
-	ConfigurationNode getConfiguration(AggregatedConfiguration scope);
+	Configuration getConfiguration(Aggregate scope);
 
 	Collection<Scope> getAvailableScopes();
 
-	Collection<AggregatedConfiguration> getAvailableAggregateScopes();
+	Collection<Aggregate> getAvailableAggregates();
 	
 	Collection<Scope> getDefinedScopes();
 
-	Collection<AggregatedConfiguration> getDefinedAggregateScopes();
+	Collection<Aggregate> getDefinedAggregates();
+	
+	Configuration freezeConfiguration(Configuration config);
+	
+	ConfigurationNode freezeConfigurationNode(ConfigurationNode config);
 
 }
