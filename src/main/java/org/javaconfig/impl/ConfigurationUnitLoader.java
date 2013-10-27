@@ -1,9 +1,10 @@
-package org.javaconfig.spi;
+package org.javaconfig.impl;
 
 import java.util.Collection;
 
 import org.javaconfig.api.ConfigurationUnit;
 import org.javaconfig.api.Environment;
+import org.javaconfig.spi.ConfigurationNode;
 
 public interface ConfigurationUnitLoader {
 

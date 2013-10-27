@@ -16,6 +16,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.sql.DataSource;
 
 import org.javaconfig.api.ConfigService;
 import org.javaconfig.api.PropertyAdapter;
@@ -48,7 +49,7 @@ import org.javaconfig.api.annot.Configured;
 @Singleton
 @ConfigType(ConfigType.DOMAIN)
 // @ConfigFilter(MyFilter.class)
-public class ConfiguredBean {
+public class CDIBean {
 
 	@Inject
 	private ConfigService configService;
@@ -66,9 +67,9 @@ public class ConfiguredBean {
 	@Configured("XML stream")
 	private URL myXmlConfig;
 
-	@Configured("mySimpleMap")
-	@ConfigAdapter(SimpleMapAdapter.class)
-	private Map<String, String> myMappedConfig;
+	@Configured("mySimpleDS")
+	@ConfigAdapter(DataSourceAdapter.class)
+	private DataSource myTestDS;
 
 	
 	/**
@@ -76,12 +77,12 @@ public class ConfiguredBean {
 	 * 
 	 * @author Anatole Tresch
 	 */
-	private static class SimpleMapAdapter implements
-			PropertyAdapter<Map<String, String>> {
+	private static class DataSourceAdapter implements
+			PropertyAdapter<DataSource> {
 
 		@Override
-		public Class getTargetType() {
-			return Map.class;
+		public Class<DataSource> getTargetType() {
+			return DataSource.class;
 		}
 
 		@Override
@@ -91,7 +92,7 @@ public class ConfiguredBean {
 		}
 
 		@Override
-		public Map<String, String> getAdapted() {
+		public DataSource getAdapted() {
 			// TODO Auto-generated method stub
 			return null;
 		}

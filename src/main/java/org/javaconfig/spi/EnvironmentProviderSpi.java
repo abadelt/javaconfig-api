@@ -11,23 +11,29 @@
  */
 package org.javaconfig.spi;
 
-import java.util.List;
-import java.util.Set;
-
-import org.javaconfig.api.PropertyValue;
+import org.javaconfig.api.ConfigurationUnit;
+import org.javaconfig.api.Environment;
 
 /**
- * Result object returned by readers, that read configuration.
+ * This SPI allows to define the current runtime environment.
+ * <p>
+ * <h4>Implementation Requirements</h4>
+ * Implementations of this interface must be:
+ * <ul>
+ * <li>thread safe</li>
+ * <li>contextual, and</li>
+ * <li>fast, since this may be called many times.</li>
+ * </ul>
  * 
  * @author Anatole Tresch
- * 
  */
-public final class ConfigReadResult {
+public interface EnvironmentProviderSpi {
 
-	private String readerId;
-	private String sourceExpression;
-	private long configReadDT = System.currentTimeMillis();
-	private List<PropertyValue> entries;
-	private Set<String> sourcesRead;
-	private List<Exception> errors;
+	/**
+	 * Defines the {@link Environment} for this runtime.
+	 * 
+	 * @return the {@link Environment} for the given runtime context.
+	 */
+	Environment getCurrentEnvironment();
+
 }

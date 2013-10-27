@@ -299,4 +299,17 @@ public class FilteredConfiguration implements Configuration {
 		return null;
 	}
 
+	@Override
+	public <T> Class<? extends T> getClassProperty(String key, Class<T> type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> Class<? extends T> getClassProperty(String key, Class<T> type,
+			String defaultValue) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

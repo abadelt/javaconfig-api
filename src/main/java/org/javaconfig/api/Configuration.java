@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * A aggregate configuration identifies a a configuration set that is defined by
  * default. A aggregate scope is identified by a unique name. An aggregate scope
@@ -152,6 +151,38 @@ public interface Configuration {
 	 *             type.
 	 */
 	String getTextProperty(String key, String defaultValue);
+
+	/**
+	 * Get the property value as {@link Class}.
+	 * 
+	 * @param key
+	 *            the property's absolute, or relative path, e.g. @code
+	 *            a/b/c/d.myProperty}.
+	 * @param type
+	 *            the required implemented interface.
+	 * @return the property's value.
+	 * @throws IllegalArgumentException
+	 *             if no such property exists, ot the given type is not
+	 *             assignable.
+	 */
+	<T> Class<? extends T> getClassProperty(String key, Class<T> type);
+
+	/**
+	 * Get the property value as {@link Class}.
+	 * 
+	 * @param key
+	 *            the property's absolute, or relative path, e.g. @code
+	 *            a/b/c/d.myProperty}.
+	 * @param type
+	 *            the required implemented interface.
+	 * @param defaultValue
+	 *            the default value, returned if no such property exists or the
+	 *            property's value is {@code null}.
+	 * @return the property's value. * @throws IllegalArgumentException if no
+	 *         such property exists, ot the given type is not assignable.
+	 */
+	<T> Class<? extends T> getClassProperty(String key, Class<T> type,
+			String defaultValue);
 
 	/**
 	 * Get the property value as {@link Boolean}.
@@ -467,10 +498,4 @@ public interface Configuration {
 	<T> Set<T> getSetProperty(String key, Class<T> type,
 			Set<T> defaultValue);
 
-	public static interface Builder {
-
-		public Configuration build();
-
-		public Configuration buildAndRegister();
-	}
 }

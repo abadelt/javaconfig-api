@@ -13,11 +13,44 @@ package org.javaconfig.api;
 
 public class ConfigChangeEvent {
 
-	public static enum Type{
+	public static enum Type {
 		REPLACED,
 		UPDATED,
 		REMOVED,
 		ADDED
 	}
-	
+
+	private Type changeType;
+	private Configuration configuration;
+	private Configuration node;
+	private PropertyValue value;
+
+	/**
+	 * @return the changeType
+	 */
+	public final Type getChangeType() {
+		return changeType;
+	}
+
+	/**
+	 * @return the configuration
+	 */
+	public final Configuration getConfiguration() {
+		return configuration;
+	}
+
+	/**
+	 * @return the node
+	 */
+	public final Configuration getNode() {
+		return node;
+	}
+
+	/**
+	 * @return the value
+	 */
+	public final PropertyValue getValue() {
+		return value;
+	}
+
 }

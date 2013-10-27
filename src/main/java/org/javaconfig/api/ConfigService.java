@@ -13,6 +13,8 @@ package org.javaconfig.api;
 
 import java.util.Collection;
 
+import org.javaconfig.api.annot.ConfigType;
+
 /**
  * Service for accessing configuration.
  * 
@@ -36,33 +38,35 @@ public interface ConfigService {
 	 * {@link Environment}.
 	 * 
 	 * @see #getCurrentEnvironment()
-	 * @param aggregate
-	 *            The aggregate, not {@code null}.
+	 * @param configType
+	 *            The {@link ConfigurationType}, not {@code null}.
 	 * @return the current {@link Configuration} corresponding to the aggregate.
 	 */
-	Configuration getConfiguration(ConfigurationType aggregate);
+	Configuration getConfiguration(ConfigurationType configType);
 
 	/**
 	 * Evaluates a {@link Configuration}.
 	 * 
-	 * @param aggregateId
-	 *            The aggregate id, not {@code null}.
-	 * @return the current {@link Configuration} corresponding to the aggregate.
+	 * @param configTypeId
+	 *            The {@link ConfigurationType} id, not {@code null}.
+	 * @return the current {@link Configuration} corresponding to the
+	 *         {@link ConfigurationType}.
 	 * @throws IllegalArgumentException
 	 *             if no corresponding {@link ConfigurationType} exists.
 	 */
-	Configuration getConfiguration(String aggregateId);
+	Configuration getConfiguration(String configTypeId);
 
 	/**
 	 * Evaluates a {@link Configuration}.
 	 * 
-	 * @param aggregateId
-	 *            The aggregate id, not {@code null}.
-	 * @return the current {@link Configuration} corresponding to the aggregate.
+	 * @param configTypeId
+	 *            The {@link ConfigurationType} id, not {@code null}.
+	 * @return the current {@link Configuration} corresponding to the
+	 *         {@link ConfigurationType}.
 	 * @throws IllegalArgumentException
 	 *             if no corresponding {@link ConfigurationType} exists.
 	 */
-	Configuration getConfiguration(String aggregateId,
+	Configuration getConfiguration(String configTypeId,
 			Environment environment);
 
 	/**
@@ -70,8 +74,8 @@ public interface ConfigService {
 	 * meaning corresponding configuration can be accessed.
 	 * 
 	 * @param aggregate
-	 *            The {@link ConfigurationType} to be checked for availability, not
-	 *            {@code null}.
+	 *            The {@link ConfigurationType} to be checked for availability,
+	 *            not {@code null}.
 	 * @return true, if the given {@link AggregateInstance} is available.
 	 */
 	boolean isConfigTypeAvailable(ConfigurationType aggregate);
@@ -80,14 +84,15 @@ public interface ConfigService {
 	 * Allows to check if a defined {@link AggregateInstance} is available,
 	 * meaning corresponding configuration can be accessed.
 	 * 
-	 * @param aggregate
-	 *            The {@link ConfigurationType} to be checked for availability, not
-	 *            {@code null}.
+	 * @param configType
+	 *            The {@link ConfigurationType} to be checked for availability,
+	 *            not {@code null}.
 	 * @param environment
 	 *            the target {@link Environment}
 	 * @return true, if the given {@link AggregateInstance} is available.
 	 */
-	boolean isConfigTypeAvailable(ConfigurationType aggregate, Environment environment);
+	boolean isConfigTypeAvailable(ConfigurationType configType,
+			Environment environment);
 
 	/**
 	 * Access all aggregates.
@@ -97,24 +102,25 @@ public interface ConfigService {
 	Collection<ConfigurationType> getConfigTypes();
 
 	/**
-	 * Allows to check if a {@link ConfigurationType} with the given id is defined.
+	 * Allows to check if a {@link ConfigurationType} with the given id is
+	 * defined.
 	 * 
-	 * @param aggregateId
-	 *            The aggregate id to be looked up, not {@code null}.
+	 * @param configTypeId
+	 *            The {@link ConfigType} id to be looked up, not {@code null}.
 	 * @return true, if the given {@link ConfigurationType} is defined.
 	 */
-	boolean isConfigTypeDefined(String aggregateId);
+	boolean isConfigTypeDefined(String configTypeId);
 
 	/**
 	 * Access a configuration {@link ConfigurationType}, by its id.
 	 * 
-	 * @param typeId
-	 *            The type id, not {@code null}.
+	 * @param configTypeId
+	 *            The {@link ConfigType} id, not {@code null}.
 	 * @return the according {@link ConfigurationType}.
 	 * @throws IllegalArgumentException
 	 *             if the aggregate is not defined.
 	 */
-	ConfigurationType getConfigType(String typeId);
+	ConfigurationType getConfigType(String configTypeId);
 
 	/**
 	 * Access the current active runtime {@link Environment}.
@@ -132,12 +138,20 @@ public interface ConfigService {
 	ConfigurationQuery createConfigurationQuery();
 
 	/**
-	 * Create a new ConfigurationBuilder for adding new configuration
+	 * Create a new {@link ConfigurationBuilder} for adding new configuration
 	 * programmatically.
 	 * 
 	 * @return
 	 */
-	Configuration.Builder createBuilder();
+	ConfigurationBuilder createBuilder();
+
+	/**
+	 * Create a new {@link ConfigurationUpdater} for updating or deletion of
+	 * configuration.
+	 * 
+	 * @return
+	 */
+	ConfigurationUpdater createUpdater(Configuration configuration);
 
 	/**
 	 * Adds a listener for configuration changes, duplicates must be ignored.
