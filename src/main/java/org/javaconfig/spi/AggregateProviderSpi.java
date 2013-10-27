@@ -14,16 +14,36 @@ package org.javaconfig.spi;
 import java.util.Collection;
 
 import org.javaconfig.api.Aggregate;
-import org.javaconfig.api.Configuration;
+import org.javaconfig.api.AggregateInstance;
+import org.javaconfig.api.ConfigurationUnit;
+import org.javaconfig.api.Environment;
 
 /**
  * This SPI allows to add additional scopes to the system.
  * 
  * @author Anatole Tresch
  */
-public interface ConfigurationAggregateProviderSpi {
+public interface AggregateProviderSpi {
 
+	/**
+	 * Defines the {@link ConfigurationUnit} accessible by this SPI
+	 * implementation.
+	 * 
+	 * @return the {@link ConfigurationUnit}s to be introduced by this SPI
+	 *         implementation.
+	 */
 	Collection<Aggregate> getAggregates();
 
-	Configuration createAggregate(Aggregate aggregate);
+	/**
+	 * Called, when a given {@link Aggregate} has to be evaluated for inclusion
+	 * into a configuration.
+	 * 
+	 * @param aggregate
+	 *            the{@link Aggregate} to be read.
+	 * @return the corresponding {@link AggregateInstance}, or {@code null}, if
+	 *         not available for the given environment.
+	 */
+	AggregateInstance getAggregateInstance(
+			Aggregate aggregate, Environment environment);
+
 }

@@ -11,7 +11,7 @@
  */
 package org.javaconfig.api;
 
-import java.util.Collection;
+import java.util.Map;
 
 /**
  * Service for accessing configuration.
@@ -21,66 +21,205 @@ import java.util.Collection;
 public interface ConfigService {
 
 	/**
-	 * Evaluates a scope.
+	 * Access the meta model.
 	 * 
-	 * @param scope
-	 * @return
+	 * @return the meta model.
 	 */
-	ConfigurationNode getConfiguration(Scope scope);
+	public ConfigMetaModel getConfigMetaModel();
 
 	/**
 	 * Evaluates a {@link Configuration}.
 	 * 
 	 * @param aggregate
 	 *            The aggregate, not {@code null}.
-	 * @return
+	 * @return the current {@link Configuration} corresponding to the aggregate.
 	 */
 	Configuration getConfiguration(Aggregate aggregate);
 
 	/**
-	 * Access all currently active scopes.
+	 * Evaluates a {@link Configuration}.
 	 * 
-	 * @return all active scopes, never {@code null}.
+	 * @param aggregate
+	 *            The aggregate, not {@code null}.
+	 * @return the current {@link Configuration} corresponding to the aggregate.
 	 */
-	Collection<Scope> getAvailableScopes();
+	Configuration getConfiguration(AggregateInstance aggregateInstance);
 
 	/**
-	 * Access all currently active aggregates.
+	 * Evaluates a {@link Configuration}.
 	 * 
-	 * @return all active aggregates, never {@code null}.
+	 * @param aggregateId
+	 *            The aggregate id, not {@code null}.
+	 * @return the current {@link Configuration} corresponding to the aggregate.
+	 * @throws IllegalArgumentException
+	 *             if no corresponding {@link Aggregate} exists.
 	 */
-	Collection<Aggregate> getAvailableAggregates();
+	Configuration getConfiguration(String aggregateId);
 
 	/**
-	 * Access all scopes.
+	 * Evaluates a {@link Configuration}.
 	 * 
-	 * @return all scopes, never {@code null}.
+	 * @param aggregateId
+	 *            The aggregate id, not {@code null}.
+	 * @return the current {@link Configuration} corresponding to the aggregate.
+	 * @throws IllegalArgumentException
+	 *             if no corresponding {@link Aggregate} exists.
 	 */
-	Collection<Scope> getDefinedScopes();
+	Configuration getConfiguration(String aggregateId,
+			Environment environment);
 
 	/**
-	 * Access all aggregates.
+	 * Allows to check if a defined {@link AggregateInstance} is available,
+	 * meaning corresponding configuration can be accessed.
 	 * 
-	 * @return all aggregates, never {@code null}.
+	 * @param aggregate
+	 *            The {@link Aggregate} to be checked for availability, not
+	 *            {@code null}.
+	 * @return true, if the given {@link AggregateInstance} is available.
 	 */
-	Collection<Aggregate> getDefinedAggregates();
+	boolean isAggregateAvailable(Aggregate aggregate);
 
 	/**
-	 * Create a freezed configuration, which is serializable and immutable.
+	 * Allows to check if a defined {@link ConfigUnitInstance} is available,
+	 * meaning corresponding configuration can be accessed.
 	 * 
-	 * @param config
-	 *            The {@link Configuration} to be fixed.
-	 * @return the freezed configuration, never {@code null}.
+	 * @param configUnit
+	 *            The {@link ConfigUnit} to be checked for availability, not
+	 *            {@code null}.
+	 * @return true, if a given {@link ConfigUnitInstance} is available.
 	 */
-	FreezedConfiguration freezeConfiguration(Configuration config);
+	boolean isConfigUnitAvailable(ConfigurationUnit configUnit);
 
 	/**
-	 * Create a freezed tree, which is serializable and immutable.
+	 * Allows to check if a defined {@link AggregateInstance} is available,
+	 * meaning corresponding configuration can be accessed.
 	 * 
-	 * @param config
-	 *            The {@link ConfigurationNode} to be fixed.
-	 * @return the freezed configuration tree, never {@code null}.
+	 * @param aggregate
+	 *            The {@link Aggregate} to be checked for availability, not
+	 *            {@code null}.
+	 * @param environment
+	 *            the target {@link Environment}
+	 * @return true, if the given {@link AggregateInstance} is available.
 	 */
-	FreezedConfigurationNode freezeConfigurationNode(ConfigurationNode config);
+	boolean isAggregateAvailable(Aggregate aggregate, Environment environment);
 
+	/**
+	 * Allows to check if a defined {@link ConfigUnitInstance} is available,
+	 * meaning corresponding configuration can be accessed.
+	 * 
+	 * @param configUnit
+	 *            The {@link ConfigUnit} to be checked for availability, not
+	 *            {@code null}.
+	 * @param environment
+	 *            the target {@link Environment}
+	 * @return true, if a given {@link ConfigUnitInstance} is available.
+	 */
+	boolean isConfigUnitAvailable(ConfigurationUnit configUnit,
+			Environment environment);
+
+	/**
+	 * Access a configuration {@link Aggregate}, by its id.
+	 * 
+	 * @param aggregateId
+	 *            The aggregate id, not {@code null}.
+	 * @return the according {@link AggregateInstance}.
+	 * @throws IllegalArgumentException
+	 *             if the aggregate is not defined.
+	 */
+	AggregateInstance getAggregateInstance(Aggregate aggregate);
+
+	/**
+	 * Access a configuration {@link Aggregate}, by its id.
+	 * 
+	 * @param aggregateId
+	 *            The aggregate id, not {@code null}.
+	 * @return the according {@link AggregateInstance}.
+	 * @throws IllegalArgumentException
+	 *             if the aggregate is not defined.
+	 */
+	AggregateInstance getAggregateInstance(Aggregate aggregate,
+			Environment environment);
+
+	/**
+	 * Evaluates a {@link ConfigurationNode} ({@link ConfigurationUnit}
+	 * sub-configuration tree).
+	 * 
+	 * @param unit
+	 *            The unit, not {@code null}.
+	 * @return the current {@link ConfigurationUnitInstance} corresponding to
+	 *         the {@link ConfigurationUnit}.
+	 */
+	ConfigurationUnitInstance getConfigurationUnitInstance(
+			ConfigurationUnit unit);
+
+	/**
+	 * Evaluates a {@link ConfigurationNode} ({@link ConfigurationUnit}
+	 * sub-configuration tree).
+	 * 
+	 * @param unit
+	 *            The unit, not {@code null}.
+	 * @return the current {@link ConfigurationUnitInstance} corresponding to
+	 *         the {@link ConfigurationUnit}.
+	 */
+	ConfigurationUnitInstance getConfigurationUnitInstance(
+			ConfigurationUnit unit, Environment environment);
+
+	/**
+	 * Access the current active runtime {@link Environment}.
+	 * 
+	 * @return the current active runtime {@link Environment}, never
+	 *         {@code null}.
+	 */
+	Environment getCurrentEnvironment();
+
+	/**
+	 * Create a {@link ConfigurationQuery} for quering arbitrary configuration.
+	 * 
+	 * @return
+	 */
+	ConfigurationQuery createConfigurationQuery();
+	
+	/**
+	 * Create a new ConfigurationBuilder for adding new configuration programmatically.
+	 * @return
+	 */
+	Configuration.Builder createBuilder();
+	
+	/**
+	 * Adds a listener for configuration changes, duplicates must be ignored.
+	 * 
+	 * @param l
+	 *            the listener to be added.
+	 */
+	void addConfigChangeListener(ConfigChangeListener l);
+
+	/**
+	 * Removes a listener for configuration changes.
+	 * 
+	 * @param l
+	 *            the listener to be removed.
+	 */
+	void removeConfigChangeListener(ConfigChangeListener l);
+
+	public static interface ConfigurationQuery {
+
+		ConfigurationQuery withAggregates(Aggregate... aggregates);
+
+		ConfigurationQuery withAggregates(String... aggregates);
+
+		ConfigurationQuery withScopes(ConfigurationUnit... scopes);
+
+		ConfigurationQuery withScopes(String... scopes);
+
+		ConfigurationQuery withEntryAttribute(String key, String valueExpression);
+
+		ConfigurationQuery withEntryAttributes(
+				Map<String, String> keyValueExpressions);
+
+		// ConfigurationQuery withNodeFilter(Predicate<ConfigurationNode>
+		// nodePredicate);
+		// ConfigurationQuery withValueFilter(Predicate<PropertyValue>
+		// valueFilter);
+		Configuration query();
+	}
 }

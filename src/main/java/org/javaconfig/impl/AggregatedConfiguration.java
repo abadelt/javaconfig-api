@@ -11,20 +11,55 @@
  */
 package org.javaconfig.impl;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.javaconfig.api.ConfigurationNode;
+import org.javaconfig.api.AggregateInstance;
+import org.javaconfig.api.ConfigService.ConfigurationQuery;
+import org.javaconfig.api.Configuration;
+import org.javaconfig.api.ConfigurationUnit;
 import org.javaconfig.api.PropertyAdapter;
-import org.javaconfig.api.PropertyValue;
 
-public class FilteringConfigurationNode implements ConfigurationNode {
+public class AggregatedConfiguration implements Configuration {
 
-	public FilteringConfigurationNode(String name,
-			ConfigurationNode... combinedNodes) {
+	/**
+	 * Policy that defines how the different aggregates should be combined.
+	 * 
+	 * @author Anatole Tresch
+	 * 
+	 */
+	public enum AggregationPolicy {
+		/** Ignore overrides, only extend (additive). */
+		IGNORE,
+		/**
+		 * Interpret later keys as override (additive and override), replacing
+		 * the key loaded earlier.
+		 */
+		OVERRIDE,
+		/**
+		 * Throw an exception, when keys are not disjunctive (strictly
+		 * additive).
+		 */
+		EXCEPTION
+	}
+
+	public AggregatedConfiguration(String name,
+			ConfigurationUnit... configUnits) {
 		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * Return the names of the {@link ConfigurationUnit} instances to be
+	 * aggregated in this instance, in the order of precedence (the first are
+	 * the weakest).
+	 * 
+	 * @return the ordered list of aggregated scope identifiers, never
+	 *         {@code null}.
+	 */
+	public List<ConfigurationUnit> getConfigurationUnits() {
+		// TODO Auto-generated constructor stub
+		return null;
 	}
 
 	@Override
@@ -34,43 +69,55 @@ public class FilteringConfigurationNode implements ConfigurationNode {
 	}
 
 	@Override
-	public List<ConfigurationNode> getChildNodes() {
+	public String getPath() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ConfigurationNode getNode(String key) {
+	public String getFullName() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Collection<ConfigurationNode> findNodes(String expression) {
+	public AggregateInstance getAggregateInstance() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean isNodePresent(String key) {
+	public boolean isActive() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean isPropertyPresent(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<PropertyValue> getProperties() {
+	public Configuration getParent() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PropertyValue getPropertyEntry(String key) {
+	public List<Configuration> getChildConfigurations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Configuration getConfiguration(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isConfigurationPresent(String key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ConfigurationQuery createConfigurationQuery() {
 		// TODO Auto-generated method stub
 		return null;
 	}

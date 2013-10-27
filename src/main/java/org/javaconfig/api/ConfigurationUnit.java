@@ -11,6 +11,9 @@
  */
 package org.javaconfig.api;
 
+import java.util.Collection;
+import java.util.Map;
+
 /**
  * A configuration scope identifies a subset of configuration available. A scope
  * is identified by a unique name and provides accessor to determine if a scope
@@ -37,28 +40,12 @@ package org.javaconfig.api;
  * 
  * @author Anatole Tresch
  */
-public interface Scope {
+public interface ConfigurationUnit {
 	/**
 	 * Returns the unique name of a scope.
 	 * 
 	 * @return The scope's name, never {@code null}.
 	 */
 	public String getName();
-
-	/**
-	 * Accessor called to determine if a scope is available within the current
-	 * context.
-	 * 
-	 * @return true, if the scope is available in the current context.
-	 */
-	public boolean isActive();
-
-	/**
-	 * Method allows to determine if a scope is contextual. Configuration of
-	 * contextual scopes are accessed whenever they are needed.
-	 * 
-	 * @return true, if this scope is contextual.
-	 */
-	public boolean isContextual();
 
 }

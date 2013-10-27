@@ -12,6 +12,7 @@
 package org.javaconfig.spi;
 
 import java.util.List;
+import java.util.Set;
 
 import org.javaconfig.api.PropertyValue;
 
@@ -27,5 +28,6 @@ public final class ConfigReadResult {
 	private String sourceExpression;
 	private long configReadDT = System.currentTimeMillis();
 	private List<PropertyValue> entries;
+	private Set<String> sourcesRead;
 	private List<Exception> errors;
 }

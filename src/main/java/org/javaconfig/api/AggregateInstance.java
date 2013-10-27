@@ -13,10 +13,23 @@ package org.javaconfig.api;
 
 import java.util.Map;
 
-public interface FreezedConfigurationNode extends Configuration {
+/**
+ * An aggregate is a ordered combination of {@link ConfigurationUnit} instances.
+ * Additionally aggregates are also {@link ConfigurationUnit}s, hereby
+ * implementing the <i>Composite</i> pattern.
+ * 
+ * @author Anatole Tresch
+ * 
+ */
+public interface AggregateInstance extends ConfigurationUnit {
 
-	long getFreezedAt();
+	Aggregate getAggregate();
 
-	Map<String, String> getContext();
+	/**
+	 * Access the context properties of this aggregate instance.
+	 * 
+	 * @return the context properties, never {@code null}.
+	 */
+	Environment getEnvironment();
 
 }
