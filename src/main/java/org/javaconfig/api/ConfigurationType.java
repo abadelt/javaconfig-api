@@ -11,7 +11,7 @@
  */
 package org.javaconfig.api;
 
-import java.util.Map;
+import java.util.Collection;
 
 /**
  * An aggregate is a ordered combination of {@link ConfigurationUnit} instances.
@@ -21,15 +21,13 @@ import java.util.Map;
  * @author Anatole Tresch
  * 
  */
-public interface AggregateInstance extends ConfigurationUnit {
-
-	Aggregate getAggregate();
+public interface ConfigurationType extends ConfigurationUnit {
 
 	/**
-	 * Access the context properties of this aggregate instance.
+	 * Access the contained config units.
 	 * 
-	 * @return the context properties, never {@code null}.
+	 * @return the {@link ConfigurationUnit} instances.
 	 */
-	Environment getEnvironment();
-
+	Collection<ConfigurationUnit> getConfigUnits();
+	
 }

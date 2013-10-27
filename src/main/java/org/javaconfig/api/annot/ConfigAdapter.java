@@ -18,9 +18,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.javaconfig.api.PropertyAdapter;
+
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
-public @interface Selector {
-	String key();
-	String value();
+@Target(value = { ElementType.FIELD, ElementType.METHOD })
+public @interface ConfigAdapter {
+	// @NonBinding 
+	Class<? extends PropertyAdapter<?>> value();
 }

@@ -11,16 +11,18 @@
  */
 package org.javaconfig.samples;
 
-import java.io.InputStream;
+import java.net.URL;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.javaconfig.api.ConfigService;
-import org.javaconfig.api.annot.AggregateScope;
-import org.javaconfig.api.annot.ConfigFilter;
+import org.javaconfig.api.PropertyAdapter;
+import org.javaconfig.api.PropertyValue;
+import org.javaconfig.api.annot.ConfigAdapter;
+import org.javaconfig.api.annot.ConfigType;
 import org.javaconfig.api.annot.Configured;
-import org.javaconfig.api.annot.Selector;
 
 /*
  * <pre>
@@ -44,9 +46,8 @@ import org.javaconfig.api.annot.Selector;
  * APP, DOMAIN, CLUSTER, VM </pre>
  */
 @Singleton
-@AggregateScope(AggregateScope.DOMAIN)
-@ConfigFilter(attributes = {
-		@Selector(key = "stage", value = "${STAGE}") })
+@ConfigType(ConfigType.DOMAIN)
+// @ConfigFilter(MyFilter.class)
 public class ConfiguredBean {
 
 	@Inject
@@ -57,12 +58,43 @@ public class ConfiguredBean {
 
 	@Configured("testValue")
 	private String value;
-	
-	@Configured("number")
-	@ConfigFilter(scopes={"myOverridingScope", "!GLOBAL"})
-	private int myNum;
-	
-	@Configured("XML stream")
-	private InputStream myXmlConfig;
 
+	@Configured("number")
+	// @ConfigFilter(MyFilter.class)
+	private int myNum;
+
+	@Configured("XML stream")
+	private URL myXmlConfig;
+
+	@Configured("mySimpleMap")
+	@ConfigAdapter(SimpleMapAdapter.class)
+	private Map<String, String> myMappedConfig;
+
+	
+	/**
+	 * Example adapter (not implemented).
+	 * 
+	 * @author Anatole Tresch
+	 */
+	private static class SimpleMapAdapter implements
+			PropertyAdapter<Map<String, String>> {
+
+		@Override
+		public Class getTargetType() {
+			return Map.class;
+		}
+
+		@Override
+		public void init(PropertyValue property) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public Map<String, String> getAdapted() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	}
 }

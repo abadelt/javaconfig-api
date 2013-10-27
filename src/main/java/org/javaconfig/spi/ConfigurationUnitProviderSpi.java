@@ -14,7 +14,6 @@ package org.javaconfig.spi;
 import java.util.Collection;
 
 import org.javaconfig.api.ConfigurationUnit;
-import org.javaconfig.api.ConfigurationUnitInstance;
 import org.javaconfig.api.Environment;
 
 /**
@@ -37,12 +36,14 @@ public interface ConfigurationUnitProviderSpi {
 	 * Called, when a given {@link ConfigurationUnit} has to be evaluated for
 	 * inclusion into a configuration.
 	 * 
-	 * @param name
-	 *            the name of the {@link ConfigurationUnit} to be read
-	 * @return the corresponding {@link ConfigurationUnit}, or {@code null}, if
-	 *         not available for the given environment.
+	 * @param unit
+	 *            the {@link ConfigurationUnit} to be read
+	 * @param environment
+	 *            The target environment
+	 * @return the corresponding collection of {@link ConfigurationNode}, or
+	 *         {@code null}, if not available for the given environment.
 	 */
-	ConfigurationUnitInstance getConfigurationUnitInstance(
+	Collection<ConfigurationNode> readConfiguration(
 			ConfigurationUnit unit, Environment environment);
 
 }

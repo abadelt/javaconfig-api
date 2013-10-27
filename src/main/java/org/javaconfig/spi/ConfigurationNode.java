@@ -9,9 +9,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.api;
+package org.javaconfig.spi;
 
 import java.util.Map;
+
+import org.javaconfig.api.PropertyValue;
 
 /**
  * Models a node within the current configuration tree.

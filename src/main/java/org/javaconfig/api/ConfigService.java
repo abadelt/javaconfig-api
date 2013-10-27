@@ -11,7 +11,7 @@
  */
 package org.javaconfig.api;
 
-import java.util.Map;
+import java.util.Collection;
 
 /**
  * Service for accessing configuration.
@@ -21,29 +21,26 @@ import java.util.Map;
 public interface ConfigService {
 
 	/**
-	 * Access the meta model.
+	 * Evaluates the current {@link Configuration}, matching to the current
+	 * {@link Environment}.
 	 * 
-	 * @return the meta model.
-	 */
-	public ConfigMetaModel getConfigMetaModel();
-
-	/**
-	 * Evaluates a {@link Configuration}.
-	 * 
+	 * @see #getCurrentEnvironment()
 	 * @param aggregate
 	 *            The aggregate, not {@code null}.
 	 * @return the current {@link Configuration} corresponding to the aggregate.
 	 */
-	Configuration getConfiguration(Aggregate aggregate);
+	Configuration getConfiguration();
 
 	/**
-	 * Evaluates a {@link Configuration}.
+	 * Evaluates the explicit {@link Configuration}, matching to the current
+	 * {@link Environment}.
 	 * 
+	 * @see #getCurrentEnvironment()
 	 * @param aggregate
 	 *            The aggregate, not {@code null}.
 	 * @return the current {@link Configuration} corresponding to the aggregate.
 	 */
-	Configuration getConfiguration(AggregateInstance aggregateInstance);
+	Configuration getConfiguration(ConfigurationType aggregate);
 
 	/**
 	 * Evaluates a {@link Configuration}.
@@ -52,7 +49,7 @@ public interface ConfigService {
 	 *            The aggregate id, not {@code null}.
 	 * @return the current {@link Configuration} corresponding to the aggregate.
 	 * @throws IllegalArgumentException
-	 *             if no corresponding {@link Aggregate} exists.
+	 *             if no corresponding {@link ConfigurationType} exists.
 	 */
 	Configuration getConfiguration(String aggregateId);
 
@@ -63,7 +60,7 @@ public interface ConfigService {
 	 *            The aggregate id, not {@code null}.
 	 * @return the current {@link Configuration} corresponding to the aggregate.
 	 * @throws IllegalArgumentException
-	 *             if no corresponding {@link Aggregate} exists.
+	 *             if no corresponding {@link ConfigurationType} exists.
 	 */
 	Configuration getConfiguration(String aggregateId,
 			Environment environment);
@@ -73,96 +70,51 @@ public interface ConfigService {
 	 * meaning corresponding configuration can be accessed.
 	 * 
 	 * @param aggregate
-	 *            The {@link Aggregate} to be checked for availability, not
+	 *            The {@link ConfigurationType} to be checked for availability, not
 	 *            {@code null}.
 	 * @return true, if the given {@link AggregateInstance} is available.
 	 */
-	boolean isAggregateAvailable(Aggregate aggregate);
-
-	/**
-	 * Allows to check if a defined {@link ConfigUnitInstance} is available,
-	 * meaning corresponding configuration can be accessed.
-	 * 
-	 * @param configUnit
-	 *            The {@link ConfigUnit} to be checked for availability, not
-	 *            {@code null}.
-	 * @return true, if a given {@link ConfigUnitInstance} is available.
-	 */
-	boolean isConfigUnitAvailable(ConfigurationUnit configUnit);
+	boolean isConfigTypeAvailable(ConfigurationType aggregate);
 
 	/**
 	 * Allows to check if a defined {@link AggregateInstance} is available,
 	 * meaning corresponding configuration can be accessed.
 	 * 
 	 * @param aggregate
-	 *            The {@link Aggregate} to be checked for availability, not
+	 *            The {@link ConfigurationType} to be checked for availability, not
 	 *            {@code null}.
 	 * @param environment
 	 *            the target {@link Environment}
 	 * @return true, if the given {@link AggregateInstance} is available.
 	 */
-	boolean isAggregateAvailable(Aggregate aggregate, Environment environment);
+	boolean isConfigTypeAvailable(ConfigurationType aggregate, Environment environment);
 
 	/**
-	 * Allows to check if a defined {@link ConfigUnitInstance} is available,
-	 * meaning corresponding configuration can be accessed.
+	 * Access all aggregates.
 	 * 
-	 * @param configUnit
-	 *            The {@link ConfigUnit} to be checked for availability, not
-	 *            {@code null}.
-	 * @param environment
-	 *            the target {@link Environment}
-	 * @return true, if a given {@link ConfigUnitInstance} is available.
+	 * @return all aggregates, never {@code null}.
 	 */
-	boolean isConfigUnitAvailable(ConfigurationUnit configUnit,
-			Environment environment);
+	Collection<ConfigurationType> getConfigTypes();
 
 	/**
-	 * Access a configuration {@link Aggregate}, by its id.
+	 * Allows to check if a {@link ConfigurationType} with the given id is defined.
 	 * 
 	 * @param aggregateId
-	 *            The aggregate id, not {@code null}.
-	 * @return the according {@link AggregateInstance}.
+	 *            The aggregate id to be looked up, not {@code null}.
+	 * @return true, if the given {@link ConfigurationType} is defined.
+	 */
+	boolean isConfigTypeDefined(String aggregateId);
+
+	/**
+	 * Access a configuration {@link ConfigurationType}, by its id.
+	 * 
+	 * @param typeId
+	 *            The type id, not {@code null}.
+	 * @return the according {@link ConfigurationType}.
 	 * @throws IllegalArgumentException
 	 *             if the aggregate is not defined.
 	 */
-	AggregateInstance getAggregateInstance(Aggregate aggregate);
-
-	/**
-	 * Access a configuration {@link Aggregate}, by its id.
-	 * 
-	 * @param aggregateId
-	 *            The aggregate id, not {@code null}.
-	 * @return the according {@link AggregateInstance}.
-	 * @throws IllegalArgumentException
-	 *             if the aggregate is not defined.
-	 */
-	AggregateInstance getAggregateInstance(Aggregate aggregate,
-			Environment environment);
-
-	/**
-	 * Evaluates a {@link ConfigurationNode} ({@link ConfigurationUnit}
-	 * sub-configuration tree).
-	 * 
-	 * @param unit
-	 *            The unit, not {@code null}.
-	 * @return the current {@link ConfigurationUnitInstance} corresponding to
-	 *         the {@link ConfigurationUnit}.
-	 */
-	ConfigurationUnitInstance getConfigurationUnitInstance(
-			ConfigurationUnit unit);
-
-	/**
-	 * Evaluates a {@link ConfigurationNode} ({@link ConfigurationUnit}
-	 * sub-configuration tree).
-	 * 
-	 * @param unit
-	 *            The unit, not {@code null}.
-	 * @return the current {@link ConfigurationUnitInstance} corresponding to
-	 *         the {@link ConfigurationUnit}.
-	 */
-	ConfigurationUnitInstance getConfigurationUnitInstance(
-			ConfigurationUnit unit, Environment environment);
+	ConfigurationType getConfigType(String typeId);
 
 	/**
 	 * Access the current active runtime {@link Environment}.
@@ -178,13 +130,15 @@ public interface ConfigService {
 	 * @return
 	 */
 	ConfigurationQuery createConfigurationQuery();
-	
+
 	/**
-	 * Create a new ConfigurationBuilder for adding new configuration programmatically.
+	 * Create a new ConfigurationBuilder for adding new configuration
+	 * programmatically.
+	 * 
 	 * @return
 	 */
 	Configuration.Builder createBuilder();
-	
+
 	/**
 	 * Adds a listener for configuration changes, duplicates must be ignored.
 	 * 
@@ -200,26 +154,4 @@ public interface ConfigService {
 	 *            the listener to be removed.
 	 */
 	void removeConfigChangeListener(ConfigChangeListener l);
-
-	public static interface ConfigurationQuery {
-
-		ConfigurationQuery withAggregates(Aggregate... aggregates);
-
-		ConfigurationQuery withAggregates(String... aggregates);
-
-		ConfigurationQuery withScopes(ConfigurationUnit... scopes);
-
-		ConfigurationQuery withScopes(String... scopes);
-
-		ConfigurationQuery withEntryAttribute(String key, String valueExpression);
-
-		ConfigurationQuery withEntryAttributes(
-				Map<String, String> keyValueExpressions);
-
-		// ConfigurationQuery withNodeFilter(Predicate<ConfigurationNode>
-		// nodePredicate);
-		// ConfigurationQuery withValueFilter(Predicate<PropertyValue>
-		// valueFilter);
-		Configuration query();
-	}
 }

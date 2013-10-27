@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.javaconfig.api.ConfigService.ConfigurationQuery;
 
 /**
  * A aggregate configuration identifies a a configuration set that is defined by
@@ -47,11 +46,18 @@ public interface Configuration {
 	public String getFullName();
 
 	/**
-	 * Return the {@link Aggregate} of this instance.
+	 * Return the {@link ConfigurationType} of this instance.
 	 * 
-	 * @return the {@link Aggregate}, never {@code null}.
+	 * @return the {@link ConfigurationType}, never {@code null}.
 	 */
-	AggregateInstance getAggregateInstance();
+	ConfigurationType getAggregate();
+
+	/**
+	 * Return the {@link Environment} of this instance.
+	 * 
+	 * @return the {@link Environment}, never {@code null}.
+	 */
+	Environment getEnvironment();
 
 	/**
 	 * Accessor called to determine if an aggregated scope is available within

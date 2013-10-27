@@ -15,10 +15,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.javaconfig.api.AggregateInstance;
-import org.javaconfig.api.ConfigService.ConfigurationQuery;
+import org.javaconfig.api.ConfigurationType;
 import org.javaconfig.api.Configuration;
+import org.javaconfig.api.ConfigurationQuery;
 import org.javaconfig.api.ConfigurationUnit;
+import org.javaconfig.api.Environment;
 import org.javaconfig.api.PropertyAdapter;
 
 public class AggregatedConfiguration implements Configuration {
@@ -81,7 +82,13 @@ public class AggregatedConfiguration implements Configuration {
 	}
 
 	@Override
-	public AggregateInstance getAggregateInstance() {
+	public ConfigurationType getAggregate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Environment getEnvironment() {
 		// TODO Auto-generated method stub
 		return null;
 	}

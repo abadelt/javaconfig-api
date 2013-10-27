@@ -13,8 +13,8 @@ package org.javaconfig.spi;
 
 import java.util.Collection;
 
-import org.javaconfig.api.Aggregate;
-import org.javaconfig.api.AggregateInstance;
+import org.javaconfig.api.ConfigurationType;
+import org.javaconfig.api.Configuration;
 import org.javaconfig.api.ConfigurationUnit;
 import org.javaconfig.api.Environment;
 
@@ -32,18 +32,20 @@ public interface AggregateProviderSpi {
 	 * @return the {@link ConfigurationUnit}s to be introduced by this SPI
 	 *         implementation.
 	 */
-	Collection<Aggregate> getAggregates();
+	Collection<ConfigurationType> getAggregates();
 
 	/**
-	 * Called, when a given {@link Aggregate} has to be evaluated for inclusion
+	 * Called, when a given {@link ConfigurationType} has to be evaluated for inclusion
 	 * into a configuration.
 	 * 
 	 * @param aggregate
-	 *            the{@link Aggregate} to be read.
+	 *            the{@link ConfigurationType} to be read.
+	 * @param environment
+	 *            The target environment.
 	 * @return the corresponding {@link AggregateInstance}, or {@code null}, if
 	 *         not available for the given environment.
 	 */
-	AggregateInstance getAggregateInstance(
-			Aggregate aggregate, Environment environment);
+	Configuration getConfiguration(
+			ConfigurationType aggregate, Environment environment);
 
 }

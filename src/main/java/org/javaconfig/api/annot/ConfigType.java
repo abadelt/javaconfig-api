@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 
  @Retention(RetentionPolicy.RUNTIME)
  @Target(value = { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
- public @interface AggregateScope {
+ public @interface ConfigType {
 	 
 	 public static final String DEPENDENT = "<DEPENDENT>";
 	 public static final String GLOBAL = "GLOBAL";
