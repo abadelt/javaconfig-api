@@ -11,12 +11,15 @@
  */
 package javax.config;
 
+import java.util.Set;
+
 /**
- * An configuration model is a aggregate combination of {@link Configuration} instances.
+ * An configuration model is a aggregate combination of {@link Configuration}
+ * instances.
  * 
  * @author Anatole Tresch
  */
-public interface ConfigurationModel extends Configuration {
+public interface ConfigurationModel {
 
 	/**
 	 * Return the {@link Environment} of this instance.
@@ -26,13 +29,13 @@ public interface ConfigurationModel extends Configuration {
 	Environment getEnvironment();
 
 	/**
-	 * Accessor called to determine if an aggregated scope is available within
-	 * the current context. Aggregated scopes are only available, when all
-	 * contained scopes are available in the current context.
+	 * Accessor called to determine if an {@link Configuration} is available
+	 * within the current context. Aggregated scopes are only available, when
+	 * all contained scopes are available in the current context.
 	 * 
 	 * @return true, if the scope is available in the current context.
 	 */
-	boolean isActive();
+	boolean isConfigurationAvailable();
 
 	/**
 	 * Create a {@link ConfigurationQuery} for quering arbitrary
@@ -41,5 +44,28 @@ public interface ConfigurationModel extends Configuration {
 	 * @return a new ConfigurationQuery instance, never {@code null}.
 	 */
 	ConfigurationQuery createConfigurationQuery();
+
+	/**
+	 * Get the names of the contained {@link Configuration} entries.
+	 * 
+	 * @return the names of the contained {@link Configuration} entries, never
+	 *         {@code null}.
+	 */
+	Set<String> getConfigurations();
+
+	/**
+	 * Get the {@link Configuration} with the given name.
+	 * 
+	 * @ses {@link #isConfigurationAvailable()}
+	 * @param name
+	 *            the config name, not {@code null}.
+	 * @return the according {@link Configuration}
+	 * @throws IllegalArgumentException
+	 *             if no such config exists.
+	 * @throws IllegalStateException
+	 *             if the required configuration is not available in the current
+	 *             runtime context.
+	 */
+	Configuration getConfiguration(String name);
 
 }

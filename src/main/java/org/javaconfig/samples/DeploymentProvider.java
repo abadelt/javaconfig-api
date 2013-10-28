@@ -13,6 +13,7 @@ package org.javaconfig.samples;
 
 import javax.config.ConfigService;
 import javax.config.Configuration;
+import javax.config.ConfigurationModel;
 import javax.config.JavaConfig;
 
 public class DeploymentProvider {
@@ -23,10 +24,11 @@ public class DeploymentProvider {
 		// custom implemented system or environment properties, mechanisms
 		System.out.println(service.getCurrentEnvironment());
 		// Access default configuration for current environment
-		Configuration config = service.getConfiguration();
-		String startupName = config
+		ConfigurationModel model = service.getConfiguration();
+		Configuration deploymentConfig = model.getConfiguration("deployment");
+		String startupName = deploymentConfig
 				.getProperty("deploy.startupName", "N/A");
-		int intProp = config.getIntProperty(
+		int intProp = deploymentConfig.getIntProperty(
 				"deploy.mainContainer.size");
 		// ...
 	}
