@@ -113,18 +113,6 @@ public interface Configuration {
 	ConfigurationQuery createConfigurationQuery();
 
 	/**
-	 * Get the property type.
-	 * 
-	 * @param key
-	 *            the property's absolute, or relative path, e.g. @code
-	 *            a/b/c/d.myProperty}.
-	 * @return the property's class.
-	 * @throws IllegalArgumentException
-	 *             if no such property exists.
-	 */
-	Class getPropertyType(String key);
-
-	/**
 	 * Get the property value as {@link String}.
 	 * 
 	 * @param key
@@ -134,7 +122,7 @@ public interface Configuration {
 	 * @throws IllegalArgumentException
 	 *             if no such property exists.
 	 */
-	String getTextProperty(String key);
+	String getProperty(String key);
 
 	/**
 	 * Get the property value as {@link String}.
@@ -150,39 +138,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	String getTextProperty(String key, String defaultValue);
-
-	/**
-	 * Get the property value as {@link Class}.
-	 * 
-	 * @param key
-	 *            the property's absolute, or relative path, e.g. @code
-	 *            a/b/c/d.myProperty}.
-	 * @param type
-	 *            the required implemented interface.
-	 * @return the property's value.
-	 * @throws IllegalArgumentException
-	 *             if no such property exists, ot the given type is not
-	 *             assignable.
-	 */
-	<T> Class<? extends T> getClassProperty(String key, Class<T> type);
-
-	/**
-	 * Get the property value as {@link Class}.
-	 * 
-	 * @param key
-	 *            the property's absolute, or relative path, e.g. @code
-	 *            a/b/c/d.myProperty}.
-	 * @param type
-	 *            the required implemented interface.
-	 * @param defaultValue
-	 *            the default value, returned if no such property exists or the
-	 *            property's value is {@code null}.
-	 * @return the property's value. * @throws IllegalArgumentException if no
-	 *         such property exists, ot the given type is not assignable.
-	 */
-	<T> Class<? extends T> getClassProperty(String key, Class<T> type,
-			String defaultValue);
+	String getProperty(String key, String defaultValue);
 
 	/**
 	 * Get the property value as {@link Boolean}.
@@ -393,49 +349,6 @@ public interface Configuration {
 	 *            a/b/c/d.myProperty}.
 	 * @param type
 	 *            the required target type.
-	 * @return the property's value.
-	 * @throws IllegalArgumentException
-	 *             if the value could not be converted to the required target
-	 *             type, or no such property exists.
-	 */
-	<T> T getProperty(String key, Class<T> type);
-
-	/**
-	 * Get the property value as type {@code Class<T>}.
-	 * <p>
-	 * If {@code Class<T>} is not one of
-	 * {@code Boolean, Short, Integer, Long, Float, Double, BigInteger, BigDecimal, String}
-	 * , an according {@link Converter} must be available to perform the
-	 * conversion from {@link String} to {@code Class<T>}.
-	 * 
-	 * @param key
-	 *            the property's absolute, or relative path, e.g. @code
-	 *            a/b/c/d.myProperty}.
-	 * @param type
-	 *            the required target type.
-	 * @param defaultValue
-	 *            the default value, returned if no such property exists or the
-	 *            property's value is {@code null}.
-	 * @return the property's value.
-	 * @throws IllegalArgumentException
-	 *             if the value could not be converted to the required target
-	 *             type.
-	 */
-	<T> T getProperty(String key, Class<T> type, T defaultValue);
-
-	/**
-	 * Get the property value as type {@code Class<T>}.
-	 * <p>
-	 * If {@code Class<T>} is not one of
-	 * {@code Boolean, Short, Integer, Long, Float, Double, BigInteger, BigDecimal, String}
-	 * , an according {@link Converter} must be available to perform the
-	 * conversion from {@link String} to {@code Class<T>}.
-	 * 
-	 * @param key
-	 *            the property's absolute, or relative path, e.g. @code
-	 *            a/b/c/d.myProperty}.
-	 * @param type
-	 *            the required target type.
 	 * @param converter
 	 *            the {@link Converter} to perform the conversion from
 	 *            {@link String} to {@code Class<T>}, not {@code null}.
@@ -444,7 +357,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type, or no such property exists.
 	 */
-	<T> T getProperty(String key, Class<T> type, PropertyAdapter adapter);
+	<T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter);
 
 	/**
 	 * Get the property value as type {@code Class<T>}.
@@ -465,8 +378,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	<T> T getProperty(String key, Class<T> type, T defaultValue,
-			PropertyAdapter adapter);
+	<T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter, T defaultValue);
 
 	Map<String, String> getMapProperty(String key);
 

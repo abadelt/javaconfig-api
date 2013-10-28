@@ -97,19 +97,13 @@ public class FilteredConfiguration implements Configuration {
 	}
 
 	@Override
-	public Class getPropertyType(String key) {
+	public String getProperty(String key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getTextProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getTextProperty(String key, String defaultValue) {
+	public String getProperty(String key, String defaultValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -199,26 +193,13 @@ public class FilteredConfiguration implements Configuration {
 	}
 
 	@Override
-	public <T> T getProperty(String key, Class<T> type) {
+	public <T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <T> T getProperty(String key, Class<T> type, T defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> T getProperty(String key, Class<T> type, PropertyAdapter adapter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> T getProperty(String key, Class<T> type, T defaultValue,
-			PropertyAdapter adapter) {
+	public <T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter, T defaultValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -299,17 +280,5 @@ public class FilteredConfiguration implements Configuration {
 		return null;
 	}
 
-	@Override
-	public <T> Class<? extends T> getClassProperty(String key, Class<T> type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> Class<? extends T> getClassProperty(String key, Class<T> type,
-			String defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

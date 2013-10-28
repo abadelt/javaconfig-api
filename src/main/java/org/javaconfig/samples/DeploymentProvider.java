@@ -25,9 +25,9 @@ public class DeploymentProvider {
 		// Access default configuration for current environment
 		Configuration config = service.getConfiguration();
 		String startupName = config
-				.getTextProperty("deploy.startupName", "N/A");
-		Class implementationType = config.getClassProperty(
-				"deploy.mainContainer.class", Appendable.class);
+				.getProperty("deploy.startupName", "N/A");
+		int intProp = config.getIntProperty(
+				"deploy.mainContainer.size");
 		// ...
 	}
 }

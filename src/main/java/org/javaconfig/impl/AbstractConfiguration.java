@@ -1,126 +1,124 @@
-/*
- * Copyright (c) 2013, Anatole Tresch.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by
- * applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
- * OF ANY KIND, either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
- */
 package org.javaconfig.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.javaconfig.api.ConfigurationType;
 import org.javaconfig.api.Configuration;
 import org.javaconfig.api.ConfigurationQuery;
-import org.javaconfig.api.ConfigurationUnit;
+import org.javaconfig.api.ConfigurationType;
 import org.javaconfig.api.Environment;
 import org.javaconfig.api.PropertyAdapter;
 
-public class AggregatedConfiguration implements Configuration {
+public abstract class AbstractConfiguration implements Configuration{
 
-	/**
-	 * Policy that defines how the different aggregates should be combined.
-	 * 
-	 * @author Anatole Tresch
-	 * 
-	 */
-	public enum AggregationPolicy {
-		/** Ignore overrides, only extend (additive). */
-		IGNORE,
-		/**
-		 * Interpret later keys as override (additive and override), replacing
-		 * the key loaded earlier.
-		 */
-		OVERRIDE,
-		/**
-		 * Throw an exception, when keys are not disjunctive (strictly
-		 * additive).
-		 */
-		EXCEPTION
-	}
-
-	public AggregatedConfiguration(String name,
-			ConfigurationUnit... configUnits) {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * Return the names of the {@link ConfigurationUnit} instances to be
-	 * aggregated in this instance, in the order of precedence (the first are
-	 * the weakest).
-	 * 
-	 * @return the ordered list of aggregated scope identifiers, never
-	 *         {@code null}.
-	 */
-	public List<ConfigurationUnit> getConfigurationUnits() {
-		// TODO Auto-generated constructor stub
-		return null;
-	}
-
+	private String name;
+	private Configuration parent;
+	private ConfigurationType configType;
+	private Environment environment;
+	private List<Configuration> children;
+	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public String getPath() {
-		// TODO Auto-generated method stub
-		return null;
+		if(parent==null){
+			return "/";
+		}
+		return parent.getPath();
 	}
 
 	@Override
 	public String getFullName() {
-		// TODO Auto-generated method stub
-		return null;
+		if(parent==null){
+			return "/" + getName();
+		}
+		return parent.getPath() + '/' + getName();
 	}
 
 	@Override
 	public ConfigurationType getAggregate() {
-		// TODO Auto-generated method stub
-		return null;
+		return configType;
 	}
-	
+
 	@Override
 	public Environment getEnvironment() {
-		// TODO Auto-generated method stub
-		return null;
+		if(environment!=null){
+			return environment;
+		}
+		if(parent!=null){
+			return parent.getEnvironment();
+		}
+		return Environment.ANY;
 	}
 
 	@Override
 	public boolean isActive() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public Configuration getParent() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent;
 	}
 
 	@Override
 	public List<Configuration> getChildConfigurations() {
-		// TODO Auto-generated method stub
-		return null;
+		if(children==null){
+			return Collections.emptyList();
+		}
+		return Collections.unmodifiableList(children);
 	}
 
 	@Override
 	public Configuration getConfiguration(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		if(children==null){
+			throw new IllegalArgumentException("No such child: " + key);
+		}
+		Configuration cfg = getChildInternal(key);
+		if(cfg==null){
+			throw new IllegalArgumentException("No such configuration: " + key);
+		}
+		return cfg;
+	}
+
+	private Configuration getChildInternal(String key) {
+		for(Configuration cfg: children){
+			if(cfg.getName().equals(key)){
+				return cfg;
+			}
+		}
+		Configuration current = this;
+		String[] path = key.split("/");
+		for(String subPath:path){
+			if(subPath.isEmpty()){
+				continue;
+			}
+			if(current instanceof AbstractConfiguration){
+				current = ((AbstractConfiguration)current).getChildInternal(subPath);
+			}
+			else{
+				try {
+					current = current.getConfiguration(subPath); 
+				} catch (Exception e) {
+					e.printStackTrace();
+					current = null;
+				}
+			}
+			if(current==null){
+				return null;
+			}
+		}
+		return current;
 	}
 
 	@Override
 	public boolean isConfigurationPresent(String key) {
-		// TODO Auto-generated method stub
-		return false;
+		return getChildInternal(key)!=null;
 	}
 
 	@Override
@@ -129,23 +127,26 @@ public class AggregatedConfiguration implements Configuration {
 		return null;
 	}
 
-
 	@Override
-	public String getProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getProperty(String key){
+		String value = getProperty(key, null);
+		if(value==null){
+			throw new IllegalArgumentException("No such property: " + key);
+		}
+		return value;
 	}
 
 	@Override
-	public String getProperty(String key, String defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract String getProperty(String key, String defaultValue);
+
 
 	@Override
 	public Boolean getBooleanProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		String val = getProperty(key);
+		if(Boolean.parseBoolean(val) || "yes".equalsIgnoreCase(val)){
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
 	}
 
 	@Override
@@ -233,8 +234,7 @@ public class AggregatedConfiguration implements Configuration {
 	}
 
 	@Override
-	public <T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter, T defaultValue
-			) {
+	public <T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter, T defaultValue) {
 		// TODO Auto-generated method stub
 		return null;
 	}
