@@ -9,25 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.api;
+package javax.config.spi;
 
-import java.util.Collection;
+import java.util.ServiceLoader;
 
 /**
- * An aggregate is a ordered combination of {@link ConfigurationUnit} instances.
- * Additionally aggregates are also {@link ConfigurationUnit}s, hereby
- * implementing the <i>Composite</i> pattern.
+ * Marker interface for registering configuration extensions using the JDK
+ * {@link ServiceLoader}.
  * 
  * @author Anatole Tresch
- * 
  */
-public interface ConfigurationType extends ConfigurationUnit {
+public interface ConfigurationExtension {
 
-	/**
-	 * Access the contained config units.
-	 * 
-	 * @return the {@link ConfigurationUnit} instances.
-	 */
-	Collection<ConfigurationUnit> getConfigUnits();
-	
 }

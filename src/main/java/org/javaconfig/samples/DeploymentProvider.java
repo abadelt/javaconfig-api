@@ -11,9 +11,9 @@
  */
 package org.javaconfig.samples;
 
-import org.javaconfig.api.ConfigService;
-import org.javaconfig.api.Configuration;
-import org.javaconfig.api.JavaConfig;
+import javax.config.ConfigService;
+import javax.config.Configuration;
+import javax.config.JavaConfig;
 
 public class DeploymentProvider {
 

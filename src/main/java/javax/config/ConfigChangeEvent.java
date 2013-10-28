@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.api;
+package javax.config;
 
 public class ConfigChangeEvent {
 
@@ -23,7 +23,7 @@ public class ConfigChangeEvent {
 	private Type changeType;
 	private Configuration configuration;
 	private Configuration node;
-	private PropertyValue value;
+	private PropertyValueMetaInfo value;
 
 	/**
 	 * @return the changeType
@@ -49,7 +49,7 @@ public class ConfigChangeEvent {
 	/**
 	 * @return the value
 	 */
-	public final PropertyValue getValue() {
+	public final PropertyValueMetaInfo getValue() {
 		return value;
 	}
 

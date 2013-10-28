@@ -9,19 +9,20 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.spi;
+package javax.config.spi;
 
 import java.util.Collection;
 
-import org.javaconfig.api.ConfigurationUnit;
-import org.javaconfig.api.Environment;
+import javax.config.Configuration;
+import javax.config.Environment;
+
 
 /**
  * This SPI allows to add additional scopes to the system.
  * 
  * @author Anatole Tresch
  */
-public interface ConfigurationUnitProviderSpi {
+public interface ConfigurationProviderSpi {
 
 	/**
 	 * Defines the {@link ConfigurationUnit} accessible by this SPI
@@ -30,7 +31,7 @@ public interface ConfigurationUnitProviderSpi {
 	 * @return the {@link ConfigurationUnit}s to be introduced by this SPI
 	 *         implementation.
 	 */
-	Collection<ConfigurationUnit> getConfigurationUnits();
+	Collection<String> getConfigurations();
 
 	/**
 	 * Called, when a given {@link ConfigurationUnit} has to be evaluated for
@@ -43,7 +44,7 @@ public interface ConfigurationUnitProviderSpi {
 	 * @return the corresponding collection of {@link ConfigurationNode}, or
 	 *         {@code null}, if not available for the given environment.
 	 */
-	Collection<ConfigurationNode> readConfiguration(
-			ConfigurationUnit unit, Environment environment);
+	Collection<Configuration> readConfiguration(
+			String configId, Environment environment);
 
 }

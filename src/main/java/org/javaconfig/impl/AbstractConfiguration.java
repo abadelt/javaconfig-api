@@ -5,20 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.javaconfig.api.Configuration;
-import org.javaconfig.api.ConfigurationQuery;
-import org.javaconfig.api.ConfigurationType;
-import org.javaconfig.api.Environment;
-import org.javaconfig.api.PropertyAdapter;
+import javax.config.Configuration;
+import javax.config.PropertyAdapter;
 
-public abstract class AbstractConfiguration implements Configuration{
+public abstract class AbstractConfiguration implements Configuration {
 
 	private String name;
 	private Configuration parent;
-	private ConfigurationType configType;
-	private Environment environment;
 	private List<Configuration> children;
-	
+
 	@Override
 	public String getName() {
 		return name;
@@ -26,7 +21,7 @@ public abstract class AbstractConfiguration implements Configuration{
 
 	@Override
 	public String getPath() {
-		if(parent==null){
+		if (parent == null) {
 			return "/";
 		}
 		return parent.getPath();
@@ -34,31 +29,10 @@ public abstract class AbstractConfiguration implements Configuration{
 
 	@Override
 	public String getFullName() {
-		if(parent==null){
+		if (parent == null) {
 			return "/" + getName();
 		}
 		return parent.getPath() + '/' + getName();
-	}
-
-	@Override
-	public ConfigurationType getAggregate() {
-		return configType;
-	}
-
-	@Override
-	public Environment getEnvironment() {
-		if(environment!=null){
-			return environment;
-		}
-		if(parent!=null){
-			return parent.getEnvironment();
-		}
-		return Environment.ANY;
-	}
-
-	@Override
-	public boolean isActive() {
-		return true;
 	}
 
 	@Override
@@ -68,7 +42,7 @@ public abstract class AbstractConfiguration implements Configuration{
 
 	@Override
 	public List<Configuration> getChildConfigurations() {
-		if(children==null){
+		if (children == null) {
 			return Collections.emptyList();
 		}
 		return Collections.unmodifiableList(children);
@@ -76,40 +50,41 @@ public abstract class AbstractConfiguration implements Configuration{
 
 	@Override
 	public Configuration getConfiguration(String key) {
-		if(children==null){
+		if (children == null) {
 			throw new IllegalArgumentException("No such child: " + key);
 		}
 		Configuration cfg = getChildInternal(key);
-		if(cfg==null){
+		if (cfg == null) {
 			throw new IllegalArgumentException("No such configuration: " + key);
 		}
 		return cfg;
 	}
 
 	private Configuration getChildInternal(String key) {
-		for(Configuration cfg: children){
-			if(cfg.getName().equals(key)){
+		for (Configuration cfg : children) {
+			if (cfg.getName().equals(key)) {
 				return cfg;
 			}
 		}
 		Configuration current = this;
 		String[] path = key.split("/");
-		for(String subPath:path){
-			if(subPath.isEmpty()){
+		for (String subPath : path) {
+			if (subPath.isEmpty()) {
 				continue;
 			}
-			if(current instanceof AbstractConfiguration){
-				current = ((AbstractConfiguration)current).getChildInternal(subPath);
+			if (current instanceof AbstractConfiguration) {
+				current = ((AbstractConfiguration) current)
+						.getChildInternal(subPath);
 			}
-			else{
+			else {
 				try {
-					current = current.getConfiguration(subPath); 
+					current = current.getConfiguration(subPath);
 				} catch (Exception e) {
 					e.printStackTrace();
 					current = null;
 				}
 			}
-			if(current==null){
+			if (current == null) {
 				return null;
 			}
 		}
@@ -118,19 +93,13 @@ public abstract class AbstractConfiguration implements Configuration{
 
 	@Override
 	public boolean isConfigurationPresent(String key) {
-		return getChildInternal(key)!=null;
+		return getChildInternal(key) != null;
 	}
 
 	@Override
-	public ConfigurationQuery createConfigurationQuery() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getProperty(String key){
+	public String getProperty(String key) {
 		String value = getProperty(key, null);
-		if(value==null){
+		if (value == null) {
 			throw new IllegalArgumentException("No such property: " + key);
 		}
 		return value;
@@ -139,11 +108,10 @@ public abstract class AbstractConfiguration implements Configuration{
 	@Override
 	public abstract String getProperty(String key, String defaultValue);
 
-
 	@Override
 	public Boolean getBooleanProperty(String key) {
 		String val = getProperty(key);
-		if(Boolean.parseBoolean(val) || "yes".equalsIgnoreCase(val)){
+		if (Boolean.parseBoolean(val) || "yes".equalsIgnoreCase(val)) {
 			return Boolean.TRUE;
 		}
 		return Boolean.FALSE;
@@ -151,92 +119,113 @@ public abstract class AbstractConfiguration implements Configuration{
 
 	@Override
 	public Boolean getBooleanProperty(String key, Boolean defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
+		String val = getProperty(key, null);
+		if (val == null) {
+			return defaultValue;
+		}
+		if (Boolean.parseBoolean(val) || "yes".equalsIgnoreCase(val)) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
 	}
 
 	@Override
 	public Byte getByteProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		return Byte.valueOf(getProperty(key));
 	}
 
 	@Override
 	public Byte getByteProperty(String key, Byte defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
+		String val = getProperty(key, null);
+		if (val == null) {
+			return defaultValue;
+		}
+		return Byte.valueOf(val);
 	}
 
 	@Override
 	public Short getShortProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		return Short.valueOf(getProperty(key));
 	}
 
 	@Override
 	public Short getShortProperty(String key, Short defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
+		String val = getProperty(key, null);
+		if (val == null) {
+			return defaultValue;
+		}
+		return Short.valueOf(val);
 	}
 
 	@Override
 	public Integer getIntProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		return Integer.valueOf(getProperty(key));
 	}
 
 	@Override
 	public Integer getIntProperty(String key, Integer defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
+		String val = getProperty(key, null);
+		if (val == null) {
+			return defaultValue;
+		}
+		return Integer.valueOf(val);
 	}
 
 	@Override
 	public Long getLongProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		return Long.valueOf(getProperty(key));
 	}
 
 	@Override
 	public Long getLongProperty(String key, Long defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
+		String val = getProperty(key, null);
+		if (val == null) {
+			return defaultValue;
+		}
+		return Long.valueOf(val);
 	}
 
 	@Override
 	public Float getFloatProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		return Float.valueOf(getProperty(key));
 	}
 
 	@Override
 	public Float getFloatProperty(String key, Float defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
+		String val = getProperty(key, null);
+		if (val == null) {
+			return defaultValue;
+		}
+		return Float.valueOf(val);
 	}
 
 	@Override
 	public Double getDoubleProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		return Double.valueOf(getProperty(key));
 	}
 
 	@Override
 	public Double getDouble(String key, Double defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
+		String val = getProperty(key, null);
+		if (val == null) {
+			return defaultValue;
+		}
+		return Double.valueOf(val);
 	}
 
 	@Override
-	public <T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter) {
+		return (T) adapter.adapt(getProperty(key));
 	}
 
 	@Override
-	public <T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter, T defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter,
+			T defaultValue) {
+		String val = getProperty(key, null);
+		if (val == null) {
+			return defaultValue;
+		}
+		return (T) adapter.adapt(val);
 	}
 
 	@Override

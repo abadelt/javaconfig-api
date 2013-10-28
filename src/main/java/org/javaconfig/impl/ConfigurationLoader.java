@@ -2,11 +2,10 @@ package org.javaconfig.impl;
 
 import java.util.Collection;
 
-import org.javaconfig.api.ConfigurationUnit;
-import org.javaconfig.api.Environment;
-import org.javaconfig.spi.ConfigurationNode;
+import javax.config.Configuration;
+import javax.config.Environment;
 
-public interface ConfigurationUnitLoader {
+public interface ConfigurationLoader {
 
 	/**
 	 * Evaluates a {@link ConfigurationNode} ({@link ConfigurationUnit}
@@ -17,34 +16,34 @@ public interface ConfigurationUnitLoader {
 	 * @return the current {@link ConfigurationUnitInstance} corresponding to
 	 *         the {@link ConfigurationUnit}.
 	 */
-	Collection<ConfigurationNode> getConfigurationNodes(
-			ConfigurationUnit unit, Environment environment);
-	
+	Configuration getConfigurations(
+			String unit, Environment environment);
+
 	/**
 	 * Access all scopes.
 	 * 
 	 * @return all scopes, never {@code null}.
 	 */
-	Collection<ConfigurationUnit> getConfigUnits();
+	Collection<String> getConfigurations();
 
 	/**
 	 * Allows to check if a scope with the given id is defined.
 	 * 
-	 * @param unitId
-	 *            The unit id to be looked up, not {@code null}.
-	 * @return true, if the given {@link ConfigurationUnit} is defined.
+	 * @param configId
+	 *            The config id to be looked up, not {@code null}.
+	 * @return true, if the given {@link Configuration} is defined.
 	 */
-	boolean isConfigUnitDefined(String unitId);
+	boolean isConfigurationDefined(String configId);
 
 	/**
 	 * Access a configuration scope, by its id.
 	 * 
-	 * @param unitId
-	 *            The scope id, not {@code null}.
-	 * @return the according scope.
+	 * @param configId
+	 *            The config id, not {@code null}.
+	 * @return the according {@link Configuration}.
 	 * @throws IllegalArgumentException
 	 *             if the scope is not defined.
 	 */
-	ConfigurationUnit getConfigUnit(String unitId);
+	Configuration getConfiguration(String configId);
 
 }

@@ -9,10 +9,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.api;
+package javax.config;
 
 import java.net.InetAddress;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -74,60 +75,31 @@ public final class JavaConfig {
 		private Environment environment = new DefaultEnvironment();
 
 		@Override
-		public Configuration getConfiguration() {
+		public ConfigurationModel getConfiguration() {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
 		}
 
 		@Override
-		public Configuration getConfiguration(ConfigurationType aggregate) {
+		public ConfigurationModel getConfiguration(String configId) {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
 		}
 
 		@Override
-		public Configuration getConfiguration(String aggregateId) {
-			throw new UnsupportedOperationException(
-					"No java-config implementation found.");
-		}
-
-		@Override
-		public Configuration getConfiguration(String aggregateId,
+		public ConfigurationModel getConfiguration(String configId,
 				Environment environment) {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
 		}
 
+
 		@Override
-		public boolean isConfigTypeAvailable(ConfigurationType aggregate) {
+		public boolean isConfigurationDefined(String configId) {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
 		}
 
-		@Override
-		public boolean isConfigTypeAvailable(ConfigurationType aggregate,
-				Environment environment) {
-			throw new UnsupportedOperationException(
-					"No java-config implementation found.");
-		}
-
-		@Override
-		public Collection<ConfigurationType> getConfigTypes() {
-			throw new UnsupportedOperationException(
-					"No java-config implementation found.");
-		}
-
-		@Override
-		public boolean isConfigTypeDefined(String aggregateId) {
-			throw new UnsupportedOperationException(
-					"No java-config implementation found.");
-		}
-
-		@Override
-		public ConfigurationType getConfigType(String typeId) {
-			throw new UnsupportedOperationException(
-					"No java-config implementation found.");
-		}
 
 		@Override
 		public Environment getCurrentEnvironment() {
@@ -160,6 +132,19 @@ public final class JavaConfig {
 
 		@Override
 		public ConfigurationUpdater createUpdater(Configuration configuration) {
+			throw new UnsupportedOperationException(
+					"No java-config implementation found.");
+		}
+
+		@Override
+		public boolean isConfigurationDefined(String configId,
+				Environment environment) {
+			throw new UnsupportedOperationException(
+					"No java-config implementation found.");
+		}
+
+		@Override
+		public Collection<String> getConfigurationIds() {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
 		}

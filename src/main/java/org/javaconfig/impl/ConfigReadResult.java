@@ -14,7 +14,8 @@ package org.javaconfig.impl;
 import java.util.List;
 import java.util.Set;
 
-import org.javaconfig.api.PropertyValue;
+import javax.config.PropertyValueMetaInfo;
+
 
 /**
  * Result object returned by readers, that read configuration.
@@ -27,7 +28,7 @@ public final class ConfigReadResult {
 	private String readerId;
 	private String sourceExpression;
 	private long configReadDT = System.currentTimeMillis();
-	private List<PropertyValue> entries;
+	private List<PropertyValueMetaInfo> entries;
 	private Set<String> sourcesRead;
 	private List<Exception> errors;
 }

@@ -11,18 +11,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.javaconfig.api.annot;
+package javax.config.annot;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.javaconfig.api.PropertyAdapter;
-
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = { ElementType.FIELD, ElementType.METHOD })
-public @interface ConfigAdapter {
-	// @NonBinding 
-	Class<? extends PropertyAdapter<?>> value();
+@Target(value = { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
+public @interface ConfigFilter {
+	Class<?> value();
 }

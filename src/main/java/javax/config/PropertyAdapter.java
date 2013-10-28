@@ -9,14 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.api;
+package javax.config;
 
-import java.util.Map;
+public interface PropertyAdapter<T> {
 
-public interface FreezedConfiguration extends Configuration {
-
-	long getFreezedAt();
-
-	Map<String, String> getContext();
+	public Class<T> getTargetType();
+	
+	public T adapt(String value);
 
 }

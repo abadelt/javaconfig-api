@@ -14,16 +14,16 @@ package org.javaconfig.samples;
 import java.net.URL;
 import java.util.Map;
 
+import javax.config.ConfigService;
+import javax.config.PropertyAdapter;
+import javax.config.PropertyValueMetaInfo;
+import javax.config.annot.ConfigAdapter;
+import javax.config.annot.ConfigType;
+import javax.config.annot.Configured;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
 
-import org.javaconfig.api.ConfigService;
-import org.javaconfig.api.PropertyAdapter;
-import org.javaconfig.api.PropertyValue;
-import org.javaconfig.api.annot.ConfigAdapter;
-import org.javaconfig.api.annot.ConfigType;
-import org.javaconfig.api.annot.Configured;
 
 /*
  * <pre>
@@ -86,13 +86,7 @@ public class CDIBean {
 		}
 
 		@Override
-		public void init(PropertyValue property) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public DataSource getAdapted() {
+		public DataSource adapt(String property) {
 			// TODO Auto-generated method stub
 			return null;
 		}

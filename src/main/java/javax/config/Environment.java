@@ -1,4 +1,4 @@
-package org.javaconfig.api;
+package javax.config;
 
 import java.util.Collections;
 import java.util.Map;

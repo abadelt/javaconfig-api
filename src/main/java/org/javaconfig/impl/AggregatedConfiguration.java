@@ -15,12 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.javaconfig.api.ConfigurationType;
-import org.javaconfig.api.Configuration;
-import org.javaconfig.api.ConfigurationQuery;
-import org.javaconfig.api.ConfigurationUnit;
-import org.javaconfig.api.Environment;
-import org.javaconfig.api.PropertyAdapter;
+import javax.config.Configuration;
+import javax.config.PropertyAdapter;
+
 
 public class AggregatedConfiguration implements Configuration {
 
@@ -46,7 +43,7 @@ public class AggregatedConfiguration implements Configuration {
 	}
 
 	public AggregatedConfiguration(String name,
-			ConfigurationUnit... configUnits) {
+			Configuration... configs) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -58,7 +55,7 @@ public class AggregatedConfiguration implements Configuration {
 	 * @return the ordered list of aggregated scope identifiers, never
 	 *         {@code null}.
 	 */
-	public List<ConfigurationUnit> getConfigurationUnits() {
+	public List<Configuration> getConfigurations() {
 		// TODO Auto-generated constructor stub
 		return null;
 	}
@@ -79,24 +76,6 @@ public class AggregatedConfiguration implements Configuration {
 	public String getFullName() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public ConfigurationType getAggregate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public Environment getEnvironment() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isActive() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -121,12 +100,6 @@ public class AggregatedConfiguration implements Configuration {
 	public boolean isConfigurationPresent(String key) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public ConfigurationQuery createConfigurationQuery() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 
@@ -227,13 +200,13 @@ public class AggregatedConfiguration implements Configuration {
 	}
 
 	@Override
-	public <T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter) {
+	public <T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter, T defaultValue
+	public <T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter, T defaultValue
 			) {
 		// TODO Auto-generated method stub
 		return null;

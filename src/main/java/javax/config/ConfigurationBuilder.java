@@ -1,12 +1,11 @@
-package org.javaconfig.api;
+package javax.config;
 
-import org.javaconfig.spi.ConfigurationNode;
 
 public interface ConfigurationBuilder {
 
 	public ConfigurationBuilder withName(String name);
 	
-	public ConfigurationBuilder withType(ConfigurationType type);
+	public ConfigurationBuilder withType(ConfigurationModel type);
 
 	public ConfigurationBuilder withType(String type);
 
@@ -14,17 +13,12 @@ public interface ConfigurationBuilder {
 
 	public ConfigurationBuilder withConfiguration(Configuration config);
 
-	public ConfigurationBuilder withConfigurationUnit(
-			ConfigurationUnit configUnit);
-
-	public ConfigurationBuilder withNode(ConfigurationNode config);
-
 	public ConfigurationBuilder withNode(String node);
 
 	public ConfigurationBuilder withLocation(String location);
 
 	public ConfigurationBuilder withProperty(String node,
-			PropertyValue value);
+			PropertyValueMetaInfo value);
 
 	public ConfigurationBuilder withProperty(String key,
 			int value);

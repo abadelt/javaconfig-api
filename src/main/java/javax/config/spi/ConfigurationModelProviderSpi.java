@@ -9,43 +9,39 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.spi;
+package javax.config.spi;
 
 import java.util.Collection;
 
-import org.javaconfig.api.ConfigurationType;
-import org.javaconfig.api.Configuration;
-import org.javaconfig.api.ConfigurationUnit;
-import org.javaconfig.api.Environment;
+import javax.config.ConfigurationModel;
+import javax.config.Environment;
 
 /**
  * This SPI allows to add additional scopes to the system.
  * 
  * @author Anatole Tresch
  */
-public interface AggregateProviderSpi {
+public interface ConfigurationModelProviderSpi {
 
 	/**
-	 * Defines the {@link ConfigurationUnit} accessible by this SPI
+	 * Defines the {@link ConfigurationModel} provided by this SPI
 	 * implementation.
 	 * 
-	 * @return the {@link ConfigurationUnit}s to be introduced by this SPI
-	 *         implementation.
+	 * @return the model ids to be introduced by this SPI implementation.
 	 */
-	Collection<ConfigurationType> getAggregates();
+	Collection<String> getConfigurationModels();
 
 	/**
-	 * Called, when a given {@link ConfigurationType} has to be evaluated for inclusion
-	 * into a configuration.
+	 * Called, when a given {@link ConfigurationModel} has to be evaluated.
 	 * 
-	 * @param aggregate
-	 *            the{@link ConfigurationType} to be read.
+	 * @param modelId
+	 *            the id of the model to be read.
 	 * @param environment
 	 *            The target environment.
-	 * @return the corresponding {@link AggregateInstance}, or {@code null}, if
+	 * @return the corresponding {@link ConfigurationModel}, or {@code null}, if
 	 *         not available for the given environment.
 	 */
-	Configuration getConfiguration(
-			ConfigurationType aggregate, Environment environment);
+	ConfigurationModel getConfiguration(
+			String modelId, Environment environment);
 
 }

@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.api.annot;
+package javax.config.annot;
 
  import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

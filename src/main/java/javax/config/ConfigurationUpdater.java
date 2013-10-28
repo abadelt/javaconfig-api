@@ -1,4 +1,4 @@
-package org.javaconfig.api;
+package javax.config;
 
 
 public interface ConfigurationUpdater extends ConfigurationBuilder{

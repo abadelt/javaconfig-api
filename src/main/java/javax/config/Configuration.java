@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.api;
+package javax.config;
 
 import java.util.List;
 import java.util.Map;
@@ -43,29 +43,6 @@ public interface Configuration {
 	public String getPath();
 
 	public String getFullName();
-
-	/**
-	 * Return the {@link ConfigurationType} of this instance.
-	 * 
-	 * @return the {@link ConfigurationType}, never {@code null}.
-	 */
-	ConfigurationType getAggregate();
-
-	/**
-	 * Return the {@link Environment} of this instance.
-	 * 
-	 * @return the {@link Environment}, never {@code null}.
-	 */
-	Environment getEnvironment();
-
-	/**
-	 * Accessor called to determine if an aggregated scope is available within
-	 * the current context. Aggregated scopes are only available, when all
-	 * contained scopes are available in the current context.
-	 * 
-	 * @return true, if the scope is available in the current context.
-	 */
-	boolean isActive();
 
 	/**
 	 * Access the node's parent.
@@ -104,13 +81,7 @@ public interface Configuration {
 	 */
 	boolean isConfigurationPresent(String key);
 
-	/**
-	 * Create a {@link ConfigurationQuery} for quering arbitrary
-	 * sub-configuration fomr this configuration.
-	 * 
-	 * @return a new ConfigurationQuery instance, never {@code null}.
-	 */
-	ConfigurationQuery createConfigurationQuery();
+	
 
 	/**
 	 * Get the property value as {@link String}.
@@ -357,7 +328,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type, or no such property exists.
 	 */
-	<T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter);
+	<T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter);
 
 	/**
 	 * Get the property value as type {@code Class<T>}.
@@ -378,8 +349,10 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	<T> T getPropertyAdapted(String key, PropertyAdapter<T> adapter, T defaultValue);
+	<T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter, T defaultValue);
 
+	// Collection support...
+	
 	Map<String, String> getMapProperty(String key);
 
 	Map<String, String> getMapProperty(String key,

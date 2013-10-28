@@ -1,10 +1,10 @@
-package org.javaconfig.api;
+package javax.config;
 
 import java.util.Map;
 
 public interface ConfigurationQuery {
 
-	ConfigurationQuery withConfigTypes(ConfigurationType... aggregates);
+	ConfigurationQuery withConfigTypes(ConfigurationModel... aggregates);
 
 	ConfigurationQuery withConfigTypes(String... aggregates);
 

@@ -9,14 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.api;
+package javax.config;
 
-public interface PropertyAdapter<T> {
+public interface ConfigChangeListener {
 
-	public Class<T> getTargetType();
-	
-	public void init(PropertyValue property);
-
-	public T getAdapted();
-
+	void configChanged(ConfigChangeEvent event);
 }
