@@ -149,6 +149,12 @@ public final class JavaConfig {
 					"No java-config implementation found.");
 		}
 
+		@Override
+		public void configure(Object instance) {
+			throw new UnsupportedOperationException(
+					"No java-config implementation found.");
+		}
+
 	}
 
 	/**

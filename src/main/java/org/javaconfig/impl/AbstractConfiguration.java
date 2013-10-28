@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.config.Configuration;
 import javax.config.PropertyAdapter;
+import javax.config.PropertyValueMetaInfo;
 
 public abstract class AbstractConfiguration implements Configuration {
 
@@ -14,6 +15,13 @@ public abstract class AbstractConfiguration implements Configuration {
 	private Configuration parent;
 	private List<Configuration> children;
 
+	@Override
+	public abstract String getProperty(String key, String defaultValue);
+	
+	@Override
+	public abstract PropertyValueMetaInfo getPropertyMetaInfo(String key);
+	
+	
 	@Override
 	public String getName() {
 		return name;
@@ -104,9 +112,6 @@ public abstract class AbstractConfiguration implements Configuration {
 		}
 		return value;
 	}
-
-	@Override
-	public abstract String getProperty(String key, String defaultValue);
 
 	@Override
 	public Boolean getBooleanProperty(String key) {

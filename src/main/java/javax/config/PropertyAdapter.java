@@ -11,10 +11,9 @@
  */
 package javax.config;
 
+//@FunctionalInterface
 public interface PropertyAdapter<T> {
 
-	public Class<T> getTargetType();
-	
 	public T adapt(String value);
 
 }

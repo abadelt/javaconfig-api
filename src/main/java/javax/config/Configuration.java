@@ -81,7 +81,16 @@ public interface Configuration {
 	 */
 	boolean isConfigurationPresent(String key);
 
-	
+	/**
+	 * Get the {@link PropertyValueMetaInfo} for the given key.
+	 * 
+	 * @param key
+	 *            the key, not {@code null}.
+	 * @return the according meta-info
+	 * @throws IllegalArgumentException
+	 *             if an invalid key is requested.
+	 */
+	PropertyValueMetaInfo getPropertyMetaInfo(String key);
 
 	/**
 	 * Get the property value as {@link String}.
@@ -349,10 +358,11 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	<T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter, T defaultValue);
+	<T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter,
+			T defaultValue);
 
 	// Collection support...
-	
+
 	Map<String, String> getMapProperty(String key);
 
 	Map<String, String> getMapProperty(String key,

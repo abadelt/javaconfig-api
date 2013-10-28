@@ -81,11 +81,6 @@ public class CDIBean {
 			PropertyAdapter<DataSource> {
 
 		@Override
-		public Class<DataSource> getTargetType() {
-			return DataSource.class;
-		}
-
-		@Override
 		public DataSource adapt(String property) {
 			// TODO Auto-generated method stub
 			return null;

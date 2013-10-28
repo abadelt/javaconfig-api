@@ -20,6 +20,7 @@ import javax.config.ConfigurationQuery;
 import javax.config.ConfigurationModel;
 import javax.config.Environment;
 import javax.config.PropertyAdapter;
+import javax.config.PropertyValueMetaInfo;
 
 
 public class FilteredConfiguration implements Configuration {
@@ -253,6 +254,12 @@ public class FilteredConfiguration implements Configuration {
 	@Override
 	public <T> Set<T> getSetProperty(String key, Class<T> type,
 			Set<T> defaultValue) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PropertyValueMetaInfo getPropertyMetaInfo(String key) {
 		// TODO Auto-generated method stub
 		return null;
 	}

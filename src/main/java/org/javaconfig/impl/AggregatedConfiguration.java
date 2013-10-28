@@ -17,6 +17,7 @@ import java.util.Set;
 
 import javax.config.Configuration;
 import javax.config.PropertyAdapter;
+import javax.config.PropertyValueMetaInfo;
 
 
 public class AggregatedConfiguration implements Configuration {
@@ -284,6 +285,12 @@ public class AggregatedConfiguration implements Configuration {
 	@Override
 	public <T> Set<T> getSetProperty(String key, Class<T> type,
 			Set<T> defaultValue) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PropertyValueMetaInfo getPropertyMetaInfo(String key) {
 		// TODO Auto-generated method stub
 		return null;
 	}

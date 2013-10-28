@@ -134,4 +134,14 @@ public interface ConfigService {
 	 *            the listener to be removed.
 	 */
 	void removeConfigChangeListener(ConfigChangeListener l);
+
+	/**
+	 * Resolved the annotated configuration resources on the given instance.
+	 * 
+	 * @param instance
+	 *            to POJO instance to be configured.
+	 * @throws IllegalArgumentException
+	 *             if configuration could not be reolsved, or converted.
+	 */
+	void configure(Object instance);
 }
