@@ -4,12 +4,14 @@ import java.util.Map;
 
 public interface ConfigurationQuery {
 
-	ConfigurationQuery withConfigTypes(ConfigurationModel... aggregates);
+	ConfigurationQuery withConfigModels(ConfigurationModel... models);
 
-	ConfigurationQuery withConfigTypes(String... aggregates);
+	ConfigurationQuery withConfigModels(String... modelIds);
 
-	ConfigurationQuery withConfigUnits(String... units);
-
+	ConfigurationQuery withConfigurations(String... configurations);
+	
+	ConfigurationQuery withSelections(String... selectionExpressions);
+	
 	ConfigurationQuery withEntryAttribute(String key, String valueExpression);
 
 	ConfigurationQuery withEntryAttributes(

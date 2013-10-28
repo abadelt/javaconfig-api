@@ -1,24 +1,27 @@
 package javax.config;
 
-
 public interface ConfigurationBuilder {
 
 	public ConfigurationBuilder withName(String name);
-	
-	public ConfigurationBuilder withType(ConfigurationModel type);
 
-	public ConfigurationBuilder withType(String type);
+	public ConfigurationBuilder withModel(ConfigurationModel type);
+
+	public ConfigurationBuilder withModel(String modelId);
 
 	public ConfigurationBuilder withEnvironment(Environment environment);
 
 	public ConfigurationBuilder withConfiguration(Configuration config);
 
-	public ConfigurationBuilder withNode(String node);
-
 	public ConfigurationBuilder withLocation(String location);
 
-	public ConfigurationBuilder withProperty(String node,
-			PropertyValueMetaInfo value);
+	public ConfigurationBuilder withQUeryPath(String queryPath);
+
+	public ConfigurationBuilder withMetaInfo(PropertyValueMetaInfo metaInfo);
+
+	public ConfigurationBuilder withProperty(String key, String value);
+
+	public ConfigurationBuilder withProperty(String key, String value,
+			PropertyValueMetaInfo metaInfo);
 
 	public ConfigurationBuilder withProperty(String key,
 			int value);
@@ -43,9 +46,6 @@ public interface ConfigurationBuilder {
 
 	public ConfigurationBuilder withProperty(String key,
 			long value);
-
-	public ConfigurationBuilder withProperty(String key,
-			String value);
 
 	public ConfigurationBuilder withQuery(ConfigurationQuery query);
 
