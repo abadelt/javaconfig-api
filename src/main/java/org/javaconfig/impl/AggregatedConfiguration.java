@@ -16,6 +16,9 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.config.Configuration;
+import javax.config.ConfigurationAdjuster;
+import javax.config.ConfigurationQuery;
+import javax.config.EnvironmentSelector;
 import javax.config.PropertyAdapter;
 import javax.config.PropertyValueMetaInfo;
 
@@ -65,42 +68,6 @@ public class AggregatedConfiguration implements Configuration {
 	public String getName() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public String getPath() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getFullName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Configuration getParent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Configuration> getChildConfigurations() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Configuration getConfiguration(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isConfigurationPresent(String key) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 
@@ -291,6 +258,24 @@ public class AggregatedConfiguration implements Configuration {
 
 	@Override
 	public PropertyValueMetaInfo getPropertyMetaInfo(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EnvironmentSelector getTargetEnvironment() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Configuration with(ConfigurationAdjuster adjuster) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> T query(ConfigurationQuery<T> query) {
 		// TODO Auto-generated method stub
 		return null;
 	}

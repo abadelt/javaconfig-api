@@ -12,14 +12,16 @@
 package javax.config;
 
 /**
- * Adapter for evaluating something different from a property value.
+ * A query allows to evaluate an arbitrary value from a
+ * {@link ConfigurationModel}.
+ * 
  * @author Anatole Tresch
- *
- * @param <T> the target type.
+ * 
+ * @param <T>
+ *            the target result type queried.
  */
-//@FunctionalInterface
-public interface PropertyAdapter<T> {
+// @FunctionalInterface
+public interface ConfigurationModelQuery<T> {
 
-	public T adapt(String value);
-
+	T queryFrom(ConfigurationModel config);
 }

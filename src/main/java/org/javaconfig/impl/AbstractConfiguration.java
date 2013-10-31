@@ -12,8 +12,6 @@ import javax.config.PropertyValueMetaInfo;
 public abstract class AbstractConfiguration implements Configuration {
 
 	private String name;
-	private Configuration parent;
-	private List<Configuration> children;
 
 	@Override
 	public abstract String getProperty(String key, String defaultValue);
@@ -27,82 +25,42 @@ public abstract class AbstractConfiguration implements Configuration {
 		return name;
 	}
 
-	@Override
-	public String getPath() {
-		if (parent == null) {
-			return "/";
-		}
-		return parent.getPath();
-	}
-
-	@Override
-	public String getFullName() {
-		if (parent == null) {
-			return "/" + getName();
-		}
-		return parent.getPath() + '/' + getName();
-	}
-
-	@Override
-	public Configuration getParent() {
-		return parent;
-	}
-
-	@Override
-	public List<Configuration> getChildConfigurations() {
-		if (children == null) {
-			return Collections.emptyList();
-		}
-		return Collections.unmodifiableList(children);
-	}
-
-	@Override
-	public Configuration getConfiguration(String key) {
-		if (children == null) {
-			throw new IllegalArgumentException("No such child: " + key);
-		}
-		Configuration cfg = getChildInternal(key);
-		if (cfg == null) {
-			throw new IllegalArgumentException("No such configuration: " + key);
-		}
-		return cfg;
-	}
-
-	private Configuration getChildInternal(String key) {
-		for (Configuration cfg : children) {
-			if (cfg.getName().equals(key)) {
-				return cfg;
-			}
-		}
-		Configuration current = this;
-		String[] path = key.split("/");
-		for (String subPath : path) {
-			if (subPath.isEmpty()) {
-				continue;
-			}
-			if (current instanceof AbstractConfiguration) {
-				current = ((AbstractConfiguration) current)
-						.getChildInternal(subPath);
-			}
-			else {
-				try {
-					current = current.getConfiguration(subPath);
-				} catch (Exception e) {
-					e.printStackTrace();
-					current = null;
-				}
-			}
-			if (current == null) {
-				return null;
-			}
-		}
-		return current;
-	}
-
-	@Override
-	public boolean isConfigurationPresent(String key) {
-		return getChildInternal(key) != null;
-	}
+//
+//	private Configuration getChildInternal(String key) {
+//		for (Configuration cfg : children) {
+//			if (cfg.getName().equals(key)) {
+//				return cfg;
+//			}
+//		}
+//		Configuration current = this;
+//		String[] path = key.split("/");
+//		for (String subPath : path) {
+//			if (subPath.isEmpty()) {
+//				continue;
+//			}
+//			if (current instanceof AbstractConfiguration) {
+//				current = ((AbstractConfiguration) current)
+//						.getChildInternal(subPath);
+//			}
+//			else {
+//				try {
+//					current = current.getConfiguration(subPath);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//					current = null;
+//				}
+//			}
+//			if (current == null) {
+//				return null;
+//			}
+//		}
+//		return current;
+//	}
+//
+//	@Override
+//	public boolean isConfigurationPresent(String key) {
+//		return getChildInternal(key) != null;
+//	}
 
 	@Override
 	public String getProperty(String key) {

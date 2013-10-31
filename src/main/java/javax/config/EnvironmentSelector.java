@@ -12,14 +12,15 @@
 package javax.config;
 
 /**
- * Adapter for evaluating something different from a property value.
+ * The selector is responsible for determining if a configuration should be
+ * included into the current configuration aggregate for a given runtime
+ * {@link Environment}.
+ * 
  * @author Anatole Tresch
- *
- * @param <T> the target type.
  */
-//@FunctionalInterface
-public interface PropertyAdapter<T> {
+// @FunctionalInterface
+public interface EnvironmentSelector {
 
-	public T adapt(String value);
+	public boolean isMatching(Environment environment);
 
 }

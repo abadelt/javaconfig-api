@@ -1,5 +1,3 @@
-org.javaconfig.api
-org.javaconfig.api.annot
-org.javaconfig.impl
-org.javaconfig.samples
-org.javaconfig.spi
+javax.config
+javax.config.annot
+javax.config.spi

@@ -38,48 +38,20 @@ import java.util.Set;
  */
 public interface Configuration {
 
+	/**
+	 * Get the configuration's name (unique within a {@link ConfigurationModel}
+	 * and {@link Environment}).
+	 * 
+	 * @return the configuration's name
+	 */
 	public String getName();
 
-	public String getPath();
-
-	public String getFullName();
-
 	/**
-	 * Access the node's parent.
+	 * Return the {@link EnvironmentSelector} of this instance.
 	 * 
-	 * @return the parent node, or {@code null}.
+	 * @return the {@link EnvironmentSelector}, never {@code null}.
 	 */
-	Configuration getParent();
-
-	/**
-	 * Access all child nodes.
-	 * 
-	 * @return the child nodes, never {@code null}.
-	 */
-	List<Configuration> getChildConfigurations();
-
-	/**
-	 * Access a child node using either a
-	 * <ul>
-	 * <li>a direct child name, e.g. {@code mycomp}, or
-	 * <li>a relative path, e.g. {@code mycomp/foo/bar}, or
-	 * <li>an absolute path, e.g. {@code /myconfig/mycomp/foo/bar}.
-	 * </ul>
-	 * 
-	 * @param key
-	 *            the absolute or relative path
-	 * @return the child node found, or {@code null}.
-	 */
-	Configuration getConfiguration(String key);
-
-	/**
-	 * Allows to evaluate if a node exists.
-	 * 
-	 * @param key
-	 *            the nodes absolute, or relative path.
-	 * @return {@code true}, if such a node exists.
-	 */
-	boolean isConfigurationPresent(String key);
+	EnvironmentSelector getTargetEnvironment();
 
 	/**
 	 * Get the {@link PropertyValueMetaInfo} for the given key.
@@ -392,5 +364,24 @@ public interface Configuration {
 
 	<T> Set<T> getSetProperty(String key, Class<T> type,
 			Set<T> defaultValue);
+
+	/**
+	 * Extension point for adjusting configuration.
+	 * 
+	 * @param adjuster
+	 *            A configuration ajuster, e.g. a filter, or an adjuster
+	 *            combining configurations.
+	 * @return the new adjusted configuration, never {@code null}.
+	 */
+	Configuration with(ConfigurationAdjuster adjuster);
+
+	/**
+	 * Query some value from a configuration.
+	 * 
+	 * @param query
+	 *            the query, never {@code null}.
+	 * @return the result
+	 */
+	<T> T query(ConfigurationQuery<T> query);
 
 }

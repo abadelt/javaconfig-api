@@ -22,13 +22,6 @@ import java.util.Set;
 public interface ConfigurationModel {
 
 	/**
-	 * Return the {@link Environment} of this instance.
-	 * 
-	 * @return the {@link Environment}, never {@code null}.
-	 */
-	Environment getEnvironment();
-
-	/**
 	 * Accessor called to determine if an {@link Configuration} is available
 	 * within the current context. Aggregated scopes are only available, when
 	 * all contained scopes are available in the current context.
@@ -38,20 +31,22 @@ public interface ConfigurationModel {
 	boolean isConfigurationAvailable();
 
 	/**
-	 * Create a {@link ConfigurationQuery} for quering arbitrary
-	 * sub-configuration for this configuration.
-	 * 
-	 * @return a new ConfigurationQuery instance, never {@code null}.
-	 */
-	ConfigurationQuery createConfigurationQuery();
-
-	/**
 	 * Get the names of the contained {@link Configuration} entries.
 	 * 
 	 * @return the names of the contained {@link Configuration} entries, never
 	 *         {@code null}.
 	 */
 	Set<String> getConfigurations();
+
+	/**
+	 * Get the contained {@link Configuration} entries.
+	 * 
+	 * @param path
+	 *            The regular expression path expression for selecting, never
+	 *            {@code null}.
+	 * @return the contained {@link Configuration} entries, never {@code null}.
+	 */
+	Set<Configuration> getConfigurations(String path);
 
 	/**
 	 * Get the {@link Configuration} with the given name.
@@ -67,5 +62,33 @@ public interface ConfigurationModel {
 	 *             runtime context.
 	 */
 	Configuration getConfiguration(String name);
+
+	/**
+	 * Allows to evaluate if a node exists.
+	 * 
+	 * @param key
+	 *            the configuration path.
+	 * @return {@code true}, if such a node exists.
+	 */
+	boolean containsConfiguration(String key);
+
+	/**
+	 * Extension point for adjusting configuration.
+	 * 
+	 * @param adjuster
+	 *            A configuration ajuster, e.g. a filter, or an adjuster
+	 *            combining configurations.
+	 * @return the new adjusted configuration, never {@code null}.
+	 */
+	ConfigurationModel with(ConfigurationModelAdjuster adjuster);
+
+	/**
+	 * Query some value from a configuration.
+	 * 
+	 * @param query
+	 *            the query, never {@code null}.
+	 * @return the result
+	 */
+	<T> T query(ConfigurationModelQuery<T> query);
 
 }
