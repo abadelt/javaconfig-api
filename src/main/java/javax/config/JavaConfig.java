@@ -205,8 +205,8 @@ public final class JavaConfig {
 		}
 
 		@Override
-		public String getStage() {
-			return stage;
+		public Stage getStage() {
+			return Stage.Development;
 		}
 
 		@Override

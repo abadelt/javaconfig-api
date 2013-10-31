@@ -12,24 +12,15 @@
 package javax.config;
 
 /**
- * The selector is responsible for determining if a configuration should be
- * included into the current configuration aggregate for a given runtime
- * {@link Environment}.
+ * Stage which should be supported by all layers.
  * 
  * @author Anatole Tresch
  */
-// @FunctionalInterface
-public interface EnvironmentSelector {
-
-	/**
-	 * Selectors that selects every environment.
-	 */
-	public static final EnvironmentSelector ANY = new EnvironmentSelector(){
-		@Override
-		public boolean isMatching(Environment environment) {
-			return true;
-		}};
-	
-	public boolean isMatching(Environment environment);
-
+public enum Stage {
+	Development,
+	UnitTest,
+	SystemTest,
+	IntegrationTest,
+	Staging,
+	Production,
 }
