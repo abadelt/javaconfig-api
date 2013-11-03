@@ -62,7 +62,7 @@ public interface Configuration {
 	 * @throws IllegalArgumentException
 	 *             if an invalid key is requested.
 	 */
-	PropertyValueMetaInfo getPropertyMetaInfo(String key);
+	Map<String,String> getPropertyMetaInfo(String key);
 
 	/**
 	 * Get the property value as {@link String}.
@@ -332,38 +332,6 @@ public interface Configuration {
 	 */
 	<T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter,
 			T defaultValue);
-
-	// Collection support...
-
-	Map<String, String> getMapProperty(String key);
-
-	Map<String, String> getMapProperty(String key,
-			Map<String, String> defaultValue);
-
-	<T> Map<String, T> getMapProperty(String key, Class<T> type);
-
-	<T> Map<String, T> getMapProperty(String key, Class<T> type,
-			Map<String, T> defaultValue);
-
-	List<String> getListProperty(String key);
-
-	List<String> getListProperty(String key,
-			List<String> defaultValue);
-
-	<T> List<T> getListProperty(String key, Class<T> type);
-
-	<T> List<T> getListProperty(String key, Class<T> type,
-			List<T> defaultValue);
-
-	Set<String> getSetProperty(String key);
-
-	Set<String> getSetProperty(String key,
-			Set<String> defaultValue);
-
-	<T> Set<T> getSetProperty(String key, Class<T> type);
-
-	<T> Set<T> getSetProperty(String key, Class<T> type,
-			Set<T> defaultValue);
 
 	/**
 	 * Extension point for adjusting configuration.

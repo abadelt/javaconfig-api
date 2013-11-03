@@ -1,66 +1,89 @@
-package org.javaconfig.impl;
+/*
+ * Copyright (c) 2013, Anatole Tresch.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by
+ * applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+package org.javaconfig.config;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 import javax.config.Configuration;
+import javax.config.ConfigurationAdjuster;
+import javax.config.ConfigurationQuery;
+import javax.config.EnvironmentSelector;
 import javax.config.PropertyAdapter;
-import javax.config.PropertyValueMetaInfo;
 
 public abstract class AbstractConfiguration implements Configuration {
 
 	private String name;
 
+	private EnvironmentSelector environmentSelector;
+
+	public AbstractConfiguration(String name, EnvironmentSelector environmentSelector) {
+		Objects.requireNonNull(environmentSelector,
+				"environmentSelector required.");
+		this.environmentSelector = environmentSelector;
+	}
+
 	@Override
 	public abstract String getProperty(String key, String defaultValue);
-	
+
 	@Override
-	public abstract PropertyValueMetaInfo getPropertyMetaInfo(String key);
-	
-	
+	public abstract Map<String, String> getPropertyMetaInfo(String key);
+
 	@Override
 	public String getName() {
 		return name;
 	}
 
-//
-//	private Configuration getChildInternal(String key) {
-//		for (Configuration cfg : children) {
-//			if (cfg.getName().equals(key)) {
-//				return cfg;
-//			}
-//		}
-//		Configuration current = this;
-//		String[] path = key.split("/");
-//		for (String subPath : path) {
-//			if (subPath.isEmpty()) {
-//				continue;
-//			}
-//			if (current instanceof AbstractConfiguration) {
-//				current = ((AbstractConfiguration) current)
-//						.getChildInternal(subPath);
-//			}
-//			else {
-//				try {
-//					current = current.getConfiguration(subPath);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//					current = null;
-//				}
-//			}
-//			if (current == null) {
-//				return null;
-//			}
-//		}
-//		return current;
-//	}
-//
-//	@Override
-//	public boolean isConfigurationPresent(String key) {
-//		return getChildInternal(key) != null;
-//	}
+	@Override
+	public EnvironmentSelector getTargetEnvironment() {
+		return environmentSelector;
+	}
+
+	//
+	// private Configuration getChildInternal(String key) {
+	// for (Configuration cfg : children) {
+	// if (cfg.getName().equals(key)) {
+	// return cfg;
+	// }
+	// }
+	// Configuration current = this;
+	// String[] path = key.split("/");
+	// for (String subPath : path) {
+	// if (subPath.isEmpty()) {
+	// continue;
+	// }
+	// if (current instanceof AbstractConfiguration) {
+	// current = ((AbstractConfiguration) current)
+	// .getChildInternal(subPath);
+	// }
+	// else {
+	// try {
+	// current = current.getConfiguration(subPath);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// current = null;
+	// }
+	// }
+	// if (current == null) {
+	// return null;
+	// }
+	// }
+	// return current;
+	// }
+	//
+	// @Override
+	// public boolean isConfigurationPresent(String key) {
+	// return getChildInternal(key) != null;
+	// }
 
 	@Override
 	public String getProperty(String key) {
@@ -192,79 +215,13 @@ public abstract class AbstractConfiguration implements Configuration {
 	}
 
 	@Override
-	public Map<String, String> getMapProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
+	public Configuration with(ConfigurationAdjuster adjuster) {
+		return adjuster.adjustInto(this);
 	}
 
 	@Override
-	public Map<String, String> getMapProperty(String key,
-			Map<String, String> defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> Map<String, T> getMapProperty(String key, Class<T> type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> Map<String, T> getMapProperty(String key, Class<T> type,
-			Map<String, T> defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<String> getListProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<String> getListProperty(String key, List<String> defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> List<T> getListProperty(String key, Class<T> type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> List<T> getListProperty(String key, Class<T> type,
-			List<T> defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<String> getSetProperty(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<String> getSetProperty(String key, Set<String> defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> Set<T> getSetProperty(String key, Class<T> type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> Set<T> getSetProperty(String key, Class<T> type,
-			Set<T> defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> T query(ConfigurationQuery<T> query) {
+		return query.queryFrom(this);
 	}
 
 }

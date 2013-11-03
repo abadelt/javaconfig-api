@@ -12,11 +12,9 @@
 package org.javaconfig.samples;
 
 import java.net.URL;
-import java.util.Map;
 
 import javax.config.ConfigService;
 import javax.config.PropertyAdapter;
-import javax.config.PropertyValueMetaInfo;
 import javax.config.annot.ConfigAdapter;
 import javax.config.annot.ConfigType;
 import javax.config.annot.Configured;

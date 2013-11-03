@@ -11,6 +11,8 @@
  */
 package javax.config;
 
+import java.util.Map;
+
 /**
  * A builder for creating new configuration instances.
  * 
@@ -30,10 +32,12 @@ public interface ConfigurationBuilder {
 
 	public ConfigurationBuilder withQueryPath(String queryPath);
 
-	public ConfigurationBuilder withMetaInfo(PropertyValueMetaInfo metaInfo);
+	public ConfigurationBuilder withMetaInfo(String key, Map<String,String> metaInfo);
+	
+	public ConfigurationBuilder withMetaInfo(String key, String metaInfoKey, String metaInfoValue);
 
 	public ConfigurationBuilder withProperty(String key, String value,
-			PropertyValueMetaInfo metaInfo);
+			Map<String,String> metaInfo);
 
 	public ConfigurationBuilder withProperty(String key,
 			int value);

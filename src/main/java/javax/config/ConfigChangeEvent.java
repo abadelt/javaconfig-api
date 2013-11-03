@@ -11,6 +11,8 @@
  */
 package javax.config;
 
+import java.util.Map;
+
 public class ConfigChangeEvent {
 
 	public static enum Type {
@@ -22,8 +24,10 @@ public class ConfigChangeEvent {
 
 	private Type changeType;
 	private Configuration configuration;
-	private Configuration node;
-	private PropertyValueMetaInfo value;
+	private String key;
+	private String value;
+	private String oldValue;
+	private Map<String,String> metaData;
 
 	/**
 	 * @return the changeType
@@ -42,15 +46,18 @@ public class ConfigChangeEvent {
 	/**
 	 * @return the node
 	 */
-	public final Configuration getNode() {
-		return node;
+	public final String getKey() {
+		return key;
 	}
 
 	/**
 	 * @return the value
 	 */
-	public final PropertyValueMetaInfo getValue() {
+	public final String getNewValue() {
 		return value;
 	}
-
+	
+	public final String getOldValue(){
+		return oldValue;
+	}
 }

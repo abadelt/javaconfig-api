@@ -9,9 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.javaconfig.impl;
+package org.javaconfig.spi;
 
-import java.util.Map;
+import java.util.Set;
+
+import javax.config.ConfigurationUnit;
+import javax.config.Environment;
 
 /**
  * A configuration reader implements a strategy for reading configuration.
@@ -28,8 +31,23 @@ public interface ConfigReaderSpi {
 	 * Read the configuration from the given source expression.
 	 * 
 	 * @param source
-	 *            the source expression, not null.
+	 *            the source expression, not {@code null}.
+	 * @param environment
+	 *            the target environment, not {@code null}.
+	 * @param sourcesRead
+	 *            the sources already read, or {@code null}. If defined the
+	 *            sources in the list will not reevaluted/included into the
+	 *            result, which prevents resources read multiple times within
+	 *            the same class loader hierarchy.
 	 * @return the configuration read, never {@code null}.
 	 */
-	ConfigReadResult readConfig(String source);
+	ConfigurationUnit readConfig(String source, Environment environment,
+			Set<String> sourcesRead);
+
+	/**
+	 * Return the prefix that identifiers this reader.
+	 * 
+	 * @return the reader's prefix, never {@code null}.
+	 */
+	String getPrefix();
 }
