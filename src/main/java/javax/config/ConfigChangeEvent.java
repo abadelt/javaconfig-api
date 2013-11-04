@@ -11,9 +11,10 @@
  */
 package javax.config;
 
+import java.util.Collections;
 import java.util.Map;
 
-public class ConfigChangeEvent {
+public final class ConfigChangeEvent {
 
 	public static enum Type {
 		REPLACED,
@@ -27,7 +28,7 @@ public class ConfigChangeEvent {
 	private String key;
 	private String value;
 	private String oldValue;
-	private Map<String,String> metaData;
+	private Map<String, String> metaData;
 
 	/**
 	 * @return the changeType
@@ -56,8 +57,13 @@ public class ConfigChangeEvent {
 	public final String getNewValue() {
 		return value;
 	}
-	
-	public final String getOldValue(){
+
+	public final String getOldValue() {
 		return oldValue;
 	}
+
+	public Map<String, String> getMetaData() {
+		return Collections.unmodifiableMap(metaData);
+	}
+
 }

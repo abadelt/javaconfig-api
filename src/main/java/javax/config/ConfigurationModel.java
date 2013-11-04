@@ -28,7 +28,7 @@ public interface ConfigurationModel {
 	 * 
 	 * @return true, if the scope is available in the current context.
 	 */
-	boolean isConfigurationAvailable();
+	public boolean isConfigurationAvailable();
 
 	/**
 	 * Get the names of the contained {@link Configuration} entries.
@@ -36,7 +36,7 @@ public interface ConfigurationModel {
 	 * @return the names of the contained {@link Configuration} entries, never
 	 *         {@code null}.
 	 */
-	Set<String> getConfigurations();
+	public Set<String> getConfigurations();
 
 	/**
 	 * Get the contained {@link Configuration} entries.
@@ -46,7 +46,7 @@ public interface ConfigurationModel {
 	 *            {@code null}.
 	 * @return the contained {@link Configuration} entries, never {@code null}.
 	 */
-	Set<Configuration> getConfigurations(String path);
+	public Set<Configuration> getConfigurations(String path);
 
 	/**
 	 * Get the {@link Configuration} with the given name.
@@ -61,7 +61,7 @@ public interface ConfigurationModel {
 	 *             if the required configuration is not available in the current
 	 *             runtime context.
 	 */
-	Configuration getConfiguration(String name);
+	public Configuration getConfiguration(String name);
 
 	/**
 	 * Allows to evaluate if a node exists.
@@ -70,7 +70,7 @@ public interface ConfigurationModel {
 	 *            the configuration path.
 	 * @return {@code true}, if such a node exists.
 	 */
-	boolean containsConfiguration(String key);
+	public boolean containsConfiguration(String key);
 
 	/**
 	 * Extension point for adjusting configuration.
@@ -80,7 +80,7 @@ public interface ConfigurationModel {
 	 *            combining configurations.
 	 * @return the new adjusted configuration, never {@code null}.
 	 */
-	ConfigurationModel with(ConfigurationModelAdjuster adjuster);
+	public ConfigurationModel with(ConfigurationModelAdjuster adjuster);
 
 	/**
 	 * Query some value from a configuration.
@@ -89,6 +89,6 @@ public interface ConfigurationModel {
 	 *            the query, never {@code null}.
 	 * @return the result
 	 */
-	<T> T query(ConfigurationModelQuery<T> query);
+	public <T> T query(ConfigurationModelQuery<T> query);
 
 }

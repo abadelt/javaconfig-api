@@ -19,52 +19,10 @@ import java.util.Map;
  * @author Anatole Tresch
  * 
  */
-public interface ConfigurationBuilder {
-
-	public ConfigurationBuilder withName(String name);
-
-	public ConfigurationBuilder withEnvironmentSelector(
-			EnvironmentSelector environment);
-
-	public ConfigurationBuilder withConfiguration(Configuration config);
-
-	public ConfigurationBuilder withLocation(String location);
-
-	public ConfigurationBuilder withQueryPath(String queryPath);
-
-	public ConfigurationBuilder withMetaInfo(String key, Map<String,String> metaInfo);
-	
-	public ConfigurationBuilder withMetaInfo(String key, String metaInfoKey, String metaInfoValue);
-
-	public ConfigurationBuilder withProperty(String key, String value,
-			Map<String,String> metaInfo);
-
-	public ConfigurationBuilder withProperty(String key,
-			int value);
-
-	public ConfigurationBuilder withProperty(String key,
-			byte value);
-
-	public ConfigurationBuilder withProperty(String key,
-			short value);
-
-	public ConfigurationBuilder withProperty(String key,
-			boolean value);
-
-	public ConfigurationBuilder withProperty(String key,
-			char value);
-
-	public ConfigurationBuilder withProperty(String key,
-			float value);
-
-	public ConfigurationBuilder withProperty(String key,
-			double value);
-
-	public ConfigurationBuilder withProperty(String key,
-			long value);
-
-	public ConfigurationBuilder withQuery(ConfigurationQuery<Boolean> query);
-
-	public Configuration build();
-
-}
+//public interface ConfigurationBuilder {
+//
+//	
+//
+//	public Configuration build();
+//
+//}

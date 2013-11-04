@@ -107,13 +107,19 @@ public final class JavaConfig {
 		}
 
 		@Override
-		public ConfigurationQuery createConfigurationQuery() {
+		public ConfigurationQuery queryConfiguration() {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
 		}
 
 		@Override
-		public ConfigurationBuilder createBuilder() {
+		public ConfigurationUpdater updateConfiguration(Configuration config) {
+			throw new UnsupportedOperationException(
+					"No java-config implementation found.");
+		}
+
+		@Override
+		public ConfigurationUpdater createConfiguration(String configId, EnvironmentSelector targetEnvironment) {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
 		}
@@ -126,12 +132,6 @@ public final class JavaConfig {
 
 		@Override
 		public void removeConfigChangeListener(ConfigChangeListener l) {
-			throw new UnsupportedOperationException(
-					"No java-config implementation found.");
-		}
-
-		@Override
-		public ConfigurationUpdater createUpdater(Configuration configuration) {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
 		}

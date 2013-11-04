@@ -101,23 +101,30 @@ public interface ConfigService {
 	 * 
 	 * @return a new {@link ConfigurationQuery} instance.
 	 */
-	ConfigurationQuery createConfigurationQuery();
+	ConfigurationQuery queryConfiguration();
 
 	/**
-	 * Create a new {@link ConfigurationBuilder} for adding new configuration
-	 * programmatically.
-	 * 
-	 * @return a new {@link ConfigurationBuilder}
-	 */
-	ConfigurationBuilder createBuilder();
-
-	/**
-	 * Create a new {@link ConfigurationUpdater} for updating or deletion of
+	 * Create a new {@link ConfigurationUpdater} for updating or deletion of a
 	 * configuration.
 	 * 
 	 * @return a new {@link ConfigurationUpdater}.
 	 */
-	ConfigurationUpdater createUpdater(Configuration configuration);
+	public ConfigurationUpdater updateConfiguration(Configuration config);
+
+	/**
+	 * Creates a {@link ConfigurationUpdater} for creating a new
+	 * {@link Configuration} instance.
+	 * 
+	 * @param configId
+	 *            the new config identifier
+	 * @param targetEnvironment
+	 *            the target environment
+	 * @return the new {@link ConfigurationUpdater}, never {@code null}.
+	 * @throws UnsupportedOperationException
+	 *             if no new Configuration can be added.
+	 */
+	public ConfigurationUpdater createConfiguration(String configId,
+			EnvironmentSelector targetEnvironment);
 
 	/**
 	 * Adds a listener for configuration changes, duplicates must be ignored.

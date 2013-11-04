@@ -51,7 +51,7 @@ public interface Configuration {
 	 * 
 	 * @return the {@link EnvironmentSelector}, never {@code null}.
 	 */
-	EnvironmentSelector getTargetEnvironment();
+	public EnvironmentSelector getTargetEnvironment();
 
 	/**
 	 * Get the {@link PropertyValueMetaInfo} for the given key.
@@ -62,7 +62,7 @@ public interface Configuration {
 	 * @throws IllegalArgumentException
 	 *             if an invalid key is requested.
 	 */
-	Map<String,String> getPropertyMetaInfo(String key);
+	public Map<String,String> getPropertyMetaInfo(String key);
 
 	/**
 	 * Get the property value as {@link String}.
@@ -74,7 +74,7 @@ public interface Configuration {
 	 * @throws IllegalArgumentException
 	 *             if no such property exists.
 	 */
-	String getProperty(String key);
+	public String getProperty(String key);
 
 	/**
 	 * Get the property value as {@link String}.
@@ -90,7 +90,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	String getProperty(String key, String defaultValue);
+	public String getProperty(String key, String defaultValue);
 
 	/**
 	 * Get the property value as {@link Boolean}.
@@ -102,7 +102,7 @@ public interface Configuration {
 	 * @throws IllegalArgumentException
 	 *             if no such property exists.
 	 */
-	Boolean getBooleanProperty(String key);
+	public Boolean getBooleanProperty(String key);
 
 	/**
 	 * Get the property value as {@link Boolean}.
@@ -118,7 +118,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	Boolean getBooleanProperty(String key, Boolean defaultValue);
+	public Boolean getBooleanProperty(String key, Boolean defaultValue);
 
 	/**
 	 * Get the property value as {@link Byte}.
@@ -130,7 +130,7 @@ public interface Configuration {
 	 * @throws IllegalArgumentException
 	 *             if no such property exists.
 	 */
-	Byte getByteProperty(String key);
+	public Byte getByteProperty(String key);
 
 	/**
 	 * Get the property value as {@link Byte}.
@@ -146,7 +146,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	Byte getByteProperty(String key, Byte defaultValue);
+	public Byte getByteProperty(String key, Byte defaultValue);
 
 	/**
 	 * Get the property value as {@link Short}.
@@ -158,7 +158,7 @@ public interface Configuration {
 	 * @throws IllegalArgumentException
 	 *             if no such property exists.
 	 */
-	Short getShortProperty(String key);
+	public Short getShortProperty(String key);
 
 	/**
 	 * Get the property value as {@link Short}.
@@ -174,7 +174,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	Short getShortProperty(String key, Short defaultValue);
+	public Short getShortProperty(String key, Short defaultValue);
 
 	/**
 	 * Get the property value as {@link Integer}.
@@ -186,7 +186,7 @@ public interface Configuration {
 	 * @throws IllegalArgumentException
 	 *             if no such property exists.
 	 */
-	Integer getIntProperty(String key);
+	public Integer getIntProperty(String key);
 
 	/**
 	 * Get the property value as {@link Integer}.
@@ -202,7 +202,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	Integer getIntProperty(String key, Integer defaultValue);
+	public Integer getIntProperty(String key, Integer defaultValue);
 
 	/**
 	 * Get the property value as {@link Long}.
@@ -214,7 +214,7 @@ public interface Configuration {
 	 * @throws IllegalArgumentException
 	 *             if no such property exists.
 	 */
-	Long getLongProperty(String key);
+	public Long getLongProperty(String key);
 
 	/**
 	 * Get the property value as {@link Long}.
@@ -230,7 +230,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	Long getLongProperty(String key, Long defaultValue);
+	public Long getLongProperty(String key, Long defaultValue);
 
 	/**
 	 * Get the property value as {@link Float}.
@@ -242,7 +242,7 @@ public interface Configuration {
 	 * @throws IllegalArgumentException
 	 *             if no such property exists.
 	 */
-	Float getFloatProperty(String key);
+	public Float getFloatProperty(String key);
 
 	/**
 	 * Get the property value as {@link Float}.
@@ -258,7 +258,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	Float getFloatProperty(String key, Float defaultValue);
+	public Float getFloatProperty(String key, Float defaultValue);
 
 	/**
 	 * Get the property value as {@link Double}.
@@ -270,7 +270,7 @@ public interface Configuration {
 	 * @throws IllegalArgumentException
 	 *             if no such property exists.
 	 */
-	Double getDoubleProperty(String key);
+	public Double getDoubleProperty(String key);
 
 	/**
 	 * Get the property value as {@link Double}.
@@ -286,7 +286,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	Double getDouble(String key, Double defaultValue);
+	public Double getDouble(String key, Double defaultValue);
 
 	/**
 	 * Get the property value as type {@code Class<T>}.
@@ -309,7 +309,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type, or no such property exists.
 	 */
-	<T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter);
+	public <T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter);
 
 	/**
 	 * Get the property value as type {@code Class<T>}.
@@ -330,7 +330,7 @@ public interface Configuration {
 	 *             if the value could not be converted to the required target
 	 *             type.
 	 */
-	<T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter,
+	public <T> T getAdaptedProperty(String key, PropertyAdapter<T> adapter,
 			T defaultValue);
 
 	/**
@@ -341,7 +341,7 @@ public interface Configuration {
 	 *            combining configurations.
 	 * @return the new adjusted configuration, never {@code null}.
 	 */
-	Configuration with(ConfigurationAdjuster adjuster);
+	public Configuration with(ConfigurationAdjuster adjuster);
 
 	/**
 	 * Query some value from a configuration.
@@ -350,6 +350,6 @@ public interface Configuration {
 	 *            the query, never {@code null}.
 	 * @return the result
 	 */
-	<T> T query(ConfigurationQuery<T> query);
+	public <T> T query(ConfigurationQuery<T> query);
 
 }
