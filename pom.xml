@@ -8,7 +8,10 @@
 		<version>0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>javaconfig-api</artifactId>
+	<groupId>javax.config</groupId>
+	<artifactId>config-api</artifactId>
+	<version>0.1-SNAPSHOT</version>
+
 	<name>JavaConfig - API</name>
 	<packaging>bundle</packaging>
 
@@ -25,20 +28,9 @@
 					<extensions>true</extensions>
 					<configuration>
 						<instructions>
-							<Export-Package>org.javaconfig.*</Export-Package>
+							<Export-Package>javax.config.*</Export-Package>
 							<Private-Package>!*</Private-Package>
 						</instructions>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<configuration>
-						<debug>true</debug>
-						<optimize>true</optimize>
-						<source>${maven.compile.sourceLevel}</source>
-						<target>${maven.compile.targetLevel}</target>
-						<encoding>${project.build.sourceEncoding}</encoding>
 					</configuration>
 				</plugin>
 			</plugins>
