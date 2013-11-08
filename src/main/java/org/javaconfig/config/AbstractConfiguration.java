@@ -43,11 +43,6 @@ public abstract class AbstractConfiguration implements Configuration {
 		return name;
 	}
 
-	@Override
-	public EnvironmentSelector getTargetEnvironment() {
-		return environmentSelector;
-	}
-
 	//
 	// private Configuration getChildInternal(String key) {
 	// for (Configuration cfg : children) {

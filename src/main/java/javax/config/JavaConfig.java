@@ -13,13 +13,14 @@ package javax.config;
 
 import java.net.InetAddress;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ServiceLoader;
 import java.util.TimeZone;
 import java.util.TreeMap;
+
+import javax.config.spi.EnvironmentContext;
 
 /**
  * Singleton accessor for Java configuration.
@@ -43,6 +44,17 @@ public final class JavaConfig {
 	 * @return the {@link ConfigService}, not {@code null}.
 	 */
 	public static ConfigService getConfigService() {
+		return configurationService;
+	}
+
+	/**
+	 * Get the {@link ConfigService}, based on the given {@link Environment}.
+	 * This method can be used for simulations and for evaluating the
+	 * configuration valid in a certain context.
+	 * 
+	 * @return the {@link ConfigService}, not {@code null}.
+	 */
+	public static ConfigService getConfigService(EnvironmentContext environment) {
 		return configurationService;
 	}
 
@@ -75,35 +87,15 @@ public final class JavaConfig {
 		private Environment environment = new DefaultEnvironment();
 
 		@Override
-		public ConfigurationModel getConfiguration() {
+		public ConfigurationModel getConfigurationModel(String configId) {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
 		}
 
 		@Override
-		public ConfigurationModel getConfiguration(String configId) {
+		public boolean isConfigurationModelDefined(String configId) {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
-		}
-
-		@Override
-		public ConfigurationModel getConfiguration(String configId,
-				Environment environment) {
-			throw new UnsupportedOperationException(
-					"No java-config implementation found.");
-		}
-
-
-		@Override
-		public boolean isConfigurationDefined(String configId) {
-			throw new UnsupportedOperationException(
-					"No java-config implementation found.");
-		}
-
-
-		@Override
-		public Environment getCurrentEnvironment() {
-			return environment;
 		}
 
 		@Override
@@ -119,7 +111,7 @@ public final class JavaConfig {
 		}
 
 		@Override
-		public ConfigurationUpdater createConfiguration(String configId, EnvironmentSelector targetEnvironment) {
+		public ConfigurationUpdater createConfiguration(String configId) {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
 		}
@@ -137,14 +129,7 @@ public final class JavaConfig {
 		}
 
 		@Override
-		public boolean isConfigurationDefined(String configId,
-				Environment environment) {
-			throw new UnsupportedOperationException(
-					"No java-config implementation found.");
-		}
-
-		@Override
-		public Collection<String> getConfigurationIds() {
+		public Collection<String> getConfigurationModelIds() {
 			throw new UnsupportedOperationException(
 					"No java-config implementation found.");
 		}
@@ -155,6 +140,23 @@ public final class JavaConfig {
 					"No java-config implementation found.");
 		}
 
+		@Override
+		public Environment getCurrentEnvironment() {
+			return environment;
+		}
+
+		@Override
+		public ConfigurationModel getConfigurationModel(String configModelId,
+				Environment environment) {
+			throw new UnsupportedOperationException(
+					"No java-config implementation found.");
+		}
+
+		@Override
+		public Environment getSystemEnvironment() {
+			return environment;
+		}
+
 	}
 
 	/**
@@ -162,19 +164,19 @@ public final class JavaConfig {
 	 * 
 	 * @author Anatole Tresch
 	 */
-	private static final class DefaultEnvironment implements Environment {
+	public static final class DefaultEnvironment implements Environment {
 
 		private Map<String, String> properties = new TreeMap<String, String>();
-		private String stage;
 
 		private static final String STAGE_PROP = "javax.config.stage";
 		private static final String DEFAULT_STAGE = "TEST";
 
 		public DefaultEnvironment() {
-			stage = System.getProperty(STAGE_PROP);
+			String stage = System.getProperty(STAGE_PROP);
 			if (stage == null) {
 				stage = DEFAULT_STAGE;
 			}
+			this.properties.put("_stage", stage);
 			// Copy system properties....
 			for (Entry<Object, Object> en : System.getProperties().entrySet()) {
 				this.properties.put(en.getKey().toString(), en.getValue()
@@ -204,9 +206,21 @@ public final class JavaConfig {
 			}
 		}
 
+		public void setStage(Stage stage) {
+			this.properties.put("_stage", stage.toString());
+		}
+
 		@Override
 		public Stage getStage() {
-			return Stage.Development;
+			try {
+				return Stage.valueOf(this.properties.get("_stage"));
+			} catch (Exception e) {
+				return Stage.Development;
+			}
+		}
+
+		public void setAttribute(String key, String value) {
+			this.properties.put(key, value);
 		}
 
 		@Override
@@ -222,7 +236,7 @@ public final class JavaConfig {
 		@Override
 		public String toString() {
 			StringBuilder out = new StringBuilder();
-			out.append("DefaultEnvironment [stage=").append(stage)
+			out.append("DefaultEnvironment [stage=").append(getStage())
 					.append(", properties:\n");
 			for (Entry<String, String> en : this.properties.entrySet()) {
 				out.append("  ").append(en.getKey().toString()).append(" = ")

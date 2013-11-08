@@ -26,13 +26,20 @@ import javax.config.Environment;
  * 
  * @author Anatole Tresch
  */
-public interface EnvironmentProviderSpi {
+public interface EnvironmentContext {
 
 	/**
-	 * Defines the {@link Environment} for this runtime.
+	 * Defines the {@link Environment} for the current runtime context.
 	 * 
 	 * @return the {@link Environment} for the given runtime context.
 	 */
 	Environment getCurrentEnvironment();
+
+	/**
+	 * Defines the global {@link Environment} for this system.
+	 * 
+	 * @return the {@link Environment} for this system.
+	 */
+	Environment getSystemEnvironment();
 
 }

@@ -11,16 +11,24 @@
  */
 package org.javaconfig.config;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.config.ConfigurationUnit;
+import javax.config.Environment;
 
 public class FilteredConfigurationUnit implements ConfigurationUnit {
 
+	private ConfigurationUnit unit;
+	
 	public FilteredConfigurationUnit(
 			ConfigurationUnit configuration) {
+		Objects.requireNonNull(configuration);
+		this.unit = configuration;
 		// , Predicate<Configuration> nodeFilter,
 		// Predicate<PropertyValue> property) {
 		// TODO Auto-generated constructor stub
@@ -28,8 +36,7 @@ public class FilteredConfigurationUnit implements ConfigurationUnit {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return unit.getName();
 	}
 
 	@Override
@@ -40,20 +47,17 @@ public class FilteredConfigurationUnit implements ConfigurationUnit {
 
 	@Override
 	public Set<String> getSources() {
-		// TODO Auto-generated method stub
-		return null;
+		return unit.getSources();
 	}
 
 	@Override
 	public List<Throwable> getErrors() {
-		// TODO Auto-generated method stub
-		return null;
+		return unit.getErrors();
 	}
 
 	@Override
-	public String getSourceExpression() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<String> getSourceExpressions() {
+		return unit.getSourceExpressions();
 	}
 
 	@Override
@@ -70,8 +74,12 @@ public class FilteredConfigurationUnit implements ConfigurationUnit {
 
 	@Override
 	public Map<String, Map<String, String>> getMetaInfo() {
-		// TODO Auto-generated method stub
-		return null;
+		return unit.getMetaInfo();
+	}
+
+	@Override
+	public boolean isActive(Environment environment) {
+		return unit.isActive(environment);
 	}
 
 }

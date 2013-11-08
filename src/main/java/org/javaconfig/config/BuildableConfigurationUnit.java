@@ -12,6 +12,7 @@
 package org.javaconfig.config;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,6 +22,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.config.ConfigurationUnit;
+import javax.config.Environment;
 
 /**
  * Result object returned by readers, that read configuration.
@@ -28,41 +30,39 @@ import javax.config.ConfigurationUnit;
  * @author Anatole Tresch
  * 
  */
-public class DefaultConfigurationUnit implements ConfigurationUnit {
+public class BuildableConfigurationUnit implements ConfigurationUnit {
 
 	private String name;
-	private String sourceExpression;
+	private Set<String> sourceExpressions;
 	private long configReadDT = System.currentTimeMillis();
 	private Map<String, Map<String, String>> metaInfo = new HashMap<String, Map<String, String>>();
 	private Map<String, String> entries = new HashMap<String, String>();
 	private Set<String> sources;
 	private List<Throwable> errors;
 
-	protected DefaultConfigurationUnit(String name, String sourceExpression,
+	protected BuildableConfigurationUnit(String name,
+			Set<String> sourceExpressions,
 			Long configReadDT, Map<String, String> entries,
 			Map<String, Map<String, String>> metaInfo, Set<String> sources,
 			List<Throwable> errors) {
 		Objects.requireNonNull(name, "name required.");
-		Objects.requireNonNull(sourceExpression, "sourceExpression required.");
+		Objects.requireNonNull(sourceExpressions, "sourceExpressions required.");
 		Objects.requireNonNull(entries, "entries required.");
 		Objects.requireNonNull(metaInfo, "metaInfo required.");
 		this.name = name;
-		this.sourceExpression = sourceExpression;
+		this.sourceExpressions = sourceExpressions;
 		this.entries = entries;
 		this.metaInfo = metaInfo;
 		this.sources = sources;
 		this.errors = errors;
 	}
 
-	protected DefaultConfigurationUnit(String name, String sourceExpression) {
+	protected BuildableConfigurationUnit(String name,
+			Set<String> sourceExpressions) {
 		Objects.requireNonNull(name, "name required.");
-		Objects.requireNonNull(sourceExpression, "sourceExpression required.");
+		Objects.requireNonNull(sourceExpressions, "sourceExpressions required.");
 		this.name = name;
-		this.sourceExpression = sourceExpression;
-	}
-
-	public String getSourceExpression() {
-		return sourceExpression;
+		this.sourceExpressions = sourceExpressions;
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class DefaultConfigurationUnit implements ConfigurationUnit {
 		Objects.requireNonNull(key, "key required.");
 		Objects.requireNonNull(value, "value required.");
 		this.entries.put(key, value);
-		if(metaInfo!=null){
+		if (metaInfo != null) {
 			this.metaInfo.put(key, metaInfo);
 		}
 	}
@@ -134,6 +134,16 @@ public class DefaultConfigurationUnit implements ConfigurationUnit {
 		this.errors.add(error);
 	}
 
+	@Override
+	public Collection<String> getSourceExpressions() {
+		return Collections.unmodifiableSet(sourceExpressions);
+	}
+
+	@Override
+	public boolean isActive(Environment environment) {
+		return true;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -141,15 +151,16 @@ public class DefaultConfigurationUnit implements ConfigurationUnit {
 	 */
 	@Override
 	public String toString() {
-		return "DefaultConfigurationUnit [name=" + name + ", sourceExpression="
-				+ sourceExpression + ", configReadDT=" + configReadDT
+		return "DefaultConfigurationUnit [name=" + name
+				+ ", sourceExpressions="
+				+ sourceExpressions + ", configReadDT=" + configReadDT
 				+ ", entries=" + entries + ", metaInfo=" + metaInfo
 				+ ", sources=" + sources + ", errors=" + errors + "]";
 	}
 
 	public static class Builder {
 		protected String name;
-		protected String sourceExpression = "N/A";
+		protected Set<String> sourceExpressions = new HashSet<String>();;
 		protected long configReadDT = System.currentTimeMillis();
 		protected Map<String, Map<String, String>> metaInfo = new HashMap<String, Map<String, String>>();
 		protected Map<String, String> entries = new HashMap<String, String>();
@@ -175,9 +186,15 @@ public class DefaultConfigurationUnit implements ConfigurationUnit {
 			return this;
 		}
 
-		public Builder withSourceExpression(String sourceExpression) {
-			Objects.requireNonNull(sourceExpression);
-			this.sourceExpression = sourceExpression;
+		public Builder withSourceExpressions(Set<String> sourceExpressions) {
+			Objects.requireNonNull(sourceExpressions);
+			this.sourceExpressions.addAll(sourceExpressions);
+			return this;
+		}
+
+		public Builder withSourceExpressions(String sourceExpression) {
+			Objects.requireNonNull(sourceExpressions);
+			this.sourceExpressions.add(sourceExpression);
 			return this;
 		}
 
@@ -207,8 +224,8 @@ public class DefaultConfigurationUnit implements ConfigurationUnit {
 			return this;
 		}
 
-		public DefaultConfigurationUnit build() {
-			return new DefaultConfigurationUnit(name, sourceExpression,
+		public BuildableConfigurationUnit build() {
+			return new BuildableConfigurationUnit(name, sourceExpressions,
 					configReadDT,
 					entries, metaInfo, sources, errors);
 		}
@@ -221,11 +238,12 @@ public class DefaultConfigurationUnit implements ConfigurationUnit {
 		@Override
 		public String toString() {
 			return "DefaultConfigurationUnit.Builder [name=" + name
-					+ ", sourceExpression="
-					+ sourceExpression + ", configReadDT=" + configReadDT
+					+ ", sourceExpressions="
+					+ sourceExpressions + ", configReadDT=" + configReadDT
 					+ ", metaInfo=" + metaInfo + ", entries=" + entries
 					+ ", sources=" + sources + ", errors=" + errors + "]";
 		}
 
 	}
+
 }

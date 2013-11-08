@@ -13,30 +13,24 @@ package javax.config;
 
 import java.util.Collection;
 
-import javax.config.annot.ConfigType;
+import javax.config.spi.EnvironmentContext;
 
 /**
- * Service for accessing configuration.
+ * Service for accessing configuration. A configuration service is always base
+ * on the environment definition provided by one instance of
+ * {@link EnvironmentContext}. It is possible to define multiple
+ * {@link ConfigService} instances, if required.
  * 
  * @author Anatole Tresch
  */
 public interface ConfigService {
 
 	/**
-	 * Evaluates the current {@link ConfigurationModel}, matching to the current
-	 * {@link Environment}.
-	 * 
-	 * @see #getCurrentEnvironment()
-	 * @return the current {@link Configuration} corresponding to the aggregate.
-	 */
-	ConfigurationModel getConfiguration();
-
-	/**
 	 * Access all defined {@link ConfigurationModel} ids.
 	 * 
 	 * @return all available configuration ids, never{@code null}.
 	 */
-	Collection<String> getConfigurationIds();
+	Collection<String> getConfigurationModelIds();
 
 	/**
 	 * Access a {@link ConfigurationModel} by name, matching to the current
@@ -49,21 +43,22 @@ public interface ConfigService {
 	 * @return the current {@link ConfigurationModel} corresponding to the
 	 *         {@code configId}.
 	 */
-	ConfigurationModel getConfiguration(String configId);
+	ConfigurationModel getConfigurationModel(String configModelId);
 
 	/**
-	 * Evaluates a {@link Configuration}.
+	 * Access a {@link ConfigurationModel} by name, matching the given target
+	 * {@link Environment}. This can be used e.g. for accessing deployment
+	 * configuration for an application to be deployed.
 	 * 
 	 * @param configId
-	 *            The {@link ConfigurationModel} configId, not {@code null}.
+	 *            The identifier of the required {@link ConfigurationModel}, not
+	 *            {@code null}.
 	 * @param environment
-	 *            The target environment.
+	 *            the target enbvironment
 	 * @return the current {@link ConfigurationModel} corresponding to the
-	 *         {@code configId} and {@code environment}.
-	 * @throws IllegalArgumentException
-	 *             if no corresponding {@link ConfigurationModel} exists.
+	 *         {@code configId}.
 	 */
-	ConfigurationModel getConfiguration(String configId,
+	ConfigurationModel getConfigurationModel(String configModelId,
 			Environment environment);
 
 	/**
@@ -71,22 +66,10 @@ public interface ConfigService {
 	 * defined.
 	 * 
 	 * @param configId
-	 *            The {@link ConfigType} id to be looked up, not {@code null}.
+	 *            The model id to be looked up, not {@code null}.
 	 * @return true, if the given {@link ConfigurationModel} is defined.
 	 */
-	boolean isConfigurationDefined(String configId);
-
-	/**
-	 * Allows to check if a {@link ConfigurationModel} with the given id is
-	 * defined.
-	 * 
-	 * @param configId
-	 *            The {@link ConfigType} id to be looked up, not {@code null}.
-	 * @param environment
-	 *            The target environment.
-	 * @return true, if the given {@link ConfigurationModel} is defined.
-	 */
-	boolean isConfigurationDefined(String configId, Environment environment);
+	boolean isConfigurationModelDefined(String configModelId);
 
 	/**
 	 * Access the current active runtime {@link Environment}.
@@ -95,6 +78,8 @@ public interface ConfigService {
 	 *         {@code null}.
 	 */
 	Environment getCurrentEnvironment();
+	
+	Environment getSystemEnvironment();
 
 	/**
 	 * Create a {@link ConfigurationQuery} for querying arbitrary configuration.
@@ -117,14 +102,11 @@ public interface ConfigService {
 	 * 
 	 * @param configId
 	 *            the new config identifier
-	 * @param targetEnvironment
-	 *            the target environment
 	 * @return the new {@link ConfigurationUpdater}, never {@code null}.
 	 * @throws UnsupportedOperationException
 	 *             if no new Configuration can be added.
 	 */
-	public ConfigurationUpdater createConfiguration(String configId,
-			EnvironmentSelector targetEnvironment);
+	public ConfigurationUpdater createConfiguration(String configId);
 
 	/**
 	 * Adds a listener for configuration changes, duplicates must be ignored.
@@ -148,7 +130,8 @@ public interface ConfigService {
 	 * @param instance
 	 *            to POJO instance to be configured.
 	 * @throws IllegalArgumentException
-	 *             if configuration could not be reolsved, or converted.
+	 *             if configuration could not be resolved, or converted.
 	 */
 	void configure(Object instance);
+
 }

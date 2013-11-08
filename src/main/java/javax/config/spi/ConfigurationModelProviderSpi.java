@@ -24,14 +24,6 @@ import javax.config.Environment;
 public interface ConfigurationModelProviderSpi {
 
 	/**
-	 * Defines the {@link ConfigurationModel} provided by this SPI
-	 * implementation.
-	 * 
-	 * @return the model ids to be introduced by this SPI implementation.
-	 */
-	Collection<String> getConfigurationModels();
-
-	/**
 	 * Called, when a given {@link ConfigurationModel} has to be evaluated.
 	 * 
 	 * @param modelId

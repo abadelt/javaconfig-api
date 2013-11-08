@@ -36,45 +36,7 @@ import java.util.Set;
  * 
  * @author Anatole Tresch
  */
-public interface Configuration {
-
-	/**
-	 * Get the configuration's name (unique within a {@link ConfigurationModel}
-	 * and {@link Environment}).
-	 * 
-	 * @return the configuration's name
-	 */
-	public String getName();
-
-	/**
-	 * Return the {@link EnvironmentSelector} of this instance.
-	 * 
-	 * @return the {@link EnvironmentSelector}, never {@code null}.
-	 */
-	public EnvironmentSelector getTargetEnvironment();
-
-	/**
-	 * Get the {@link PropertyValueMetaInfo} for the given key.
-	 * 
-	 * @param key
-	 *            the key, not {@code null}.
-	 * @return the according meta-info
-	 * @throws IllegalArgumentException
-	 *             if an invalid key is requested.
-	 */
-	public Map<String,String> getPropertyMetaInfo(String key);
-
-	/**
-	 * Get the property value as {@link String}.
-	 * 
-	 * @param key
-	 *            the property's absolute, or relative path, e.g. @code
-	 *            a/b/c/d.myProperty}.
-	 * @return the property's value.
-	 * @throws IllegalArgumentException
-	 *             if no such property exists.
-	 */
-	public String getProperty(String key);
+public interface Configuration extends ConfigurationUnit{
 
 	/**
 	 * Get the property value as {@link String}.

@@ -11,6 +11,7 @@
  */
 package javax.config;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,16 +53,14 @@ public interface ConfigurationUnit {
 	 * 
 	 * @return the configuration's name
 	 */
-	public String getSourceExpression();
+	public Collection<String> getSourceExpressions();
 
 	/**
 	 * Get the {@link PropertyValueMetaInfo} for the given key.
 	 * 
 	 * @param key
 	 *            the key, not {@code null}.
-	 * @return the according meta-info
-	 * @throws IllegalArgumentException
-	 *             if an invalid key is requested.
+	 * @return the according meta-info, or {@code null}.
 	 */
 	public Map<String, String> getPropertyMetaInfo(String key);
 
@@ -71,9 +70,7 @@ public interface ConfigurationUnit {
 	 * @param key
 	 *            the property's absolute, or relative path, e.g. @code
 	 *            a/b/c/d.myProperty}.
-	 * @return the property's value.
-	 * @throws IllegalArgumentException
-	 *             if no such property exists.
+	 * @return the property's value, or {@code null}.
 	 */
 	public String getProperty(String key);
 
@@ -93,5 +90,15 @@ public interface ConfigurationUnit {
 	 *         unmodifiable {@link Map}, never {@code null}.
 	 */
 	public Map<String, Map<String, String>> getMetaInfo();
+
+	/**
+	 * Allows to determine if the given {@link ConfigurationUnit} defines any
+	 * properties in the given context( {@link Environment} ).
+	 * 
+	 * @param environment
+	 *            the environment where the config is evaluated.
+	 * @return true, if the {@link ConfigurationUnit} is defined.
+	 */
+	public boolean isActive(Environment environment);
 
 }

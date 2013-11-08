@@ -14,7 +14,10 @@ package org.javaconfig.samples;
 import javax.config.ConfigService;
 import javax.config.Configuration;
 import javax.config.ConfigurationModel;
+import javax.config.Environment;
 import javax.config.JavaConfig;
+import javax.config.JavaConfig.DefaultEnvironment;
+import javax.config.Stage;
 
 public class DeploymentProvider {
 
@@ -24,7 +27,12 @@ public class DeploymentProvider {
 		// custom implemented system or environment properties, mechanisms
 		System.out.println(service.getCurrentEnvironment());
 		// Access default configuration for current environment
-		ConfigurationModel model = service.getConfiguration();
+		DefaultEnvironment myTarget = new DefaultEnvironment();
+		myTarget.setAttribute("domain", "com.test.mydom:domain1:1.0.1");
+		myTarget.setAttribute("application", "com.test.mydom:app1:1.0.1");
+		myTarget.setAttribute("env", "localTest");
+		myTarget.setStage(Stage.UnitTest);
+		ConfigurationModel model = service.getConfigurationModel("deploymentModel", myTarget);
 		Configuration deploymentConfig = model.getConfiguration("deployment");
 		String startupName = deploymentConfig
 				.getProperty("deploy.startupName", "N/A");

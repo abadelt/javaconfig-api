@@ -15,20 +15,21 @@ import java.util.Set;
 
 /**
  * An configuration model is a aggregate combination of {@link Configuration}
- * instances.
+ * instances. Hereby the effective properties visible are dependent on the
+ * current {@link Environment}. It is possible that whole {@link Configuration}
+ * instances can be not active, or that some {@link ConfigurationUnit} instances
+ * may not be available.
  * 
  * @author Anatole Tresch
  */
 public interface ConfigurationModel {
 
 	/**
-	 * Accessor called to determine if an {@link Configuration} is available
-	 * within the current context. Aggregated scopes are only available, when
-	 * all contained scopes are available in the current context.
+	 * Get the model's name.
 	 * 
-	 * @return true, if the scope is available in the current context.
+	 * @return the model name, never {@code null}.
 	 */
-	public boolean isConfigurationAvailable();
+	public String getName();
 
 	/**
 	 * Get the names of the contained {@link Configuration} entries.
@@ -51,7 +52,7 @@ public interface ConfigurationModel {
 	/**
 	 * Get the {@link Configuration} with the given name.
 	 * 
-	 * @ses {@link #isConfigurationAvailable()}
+	 * @ses {@link #isAvailable()}
 	 * @param name
 	 *            the config name, not {@code null}.
 	 * @return the according {@link Configuration}

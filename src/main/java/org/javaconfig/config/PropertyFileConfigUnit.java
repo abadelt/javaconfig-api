@@ -3,16 +3,21 @@ package org.javaconfig.config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class PropertyFileConfigUnit extends ResourceConfigurationUnit {
+public class PropertyFileConfigUnit extends AbstractResourceConfigurationUnit {
+
+	private Map<String, String> props = new HashMap<String, String>();
+	private Map<String, Map<String, String>> propMetaInfo = new HashMap<String, Map<String, String>>();
 
 	public PropertyFileConfigUnit(
 			String name,
 			String resourcePath,
 			ClassLoader classLoader,
-			ResourceConfigurationUnit parentConfig) {
+			AbstractResourceConfigurationUnit parentConfig) {
 		super(classLoader, parentConfig, name, resourcePath);
 		readProperties();
 	}
@@ -20,7 +25,7 @@ public class PropertyFileConfigUnit extends ResourceConfigurationUnit {
 	public PropertyFileConfigUnit(
 			String name,
 			String resourcePath,
-			ResourceConfigurationUnit parentConfig) {
+			AbstractResourceConfigurationUnit parentConfig) {
 		super(getCurrentClassLoader(), parentConfig, name, resourcePath);
 		readProperties();
 	}
@@ -33,22 +38,37 @@ public class PropertyFileConfigUnit extends ResourceConfigurationUnit {
 
 	private void readProperties() {
 		// TODO source expression may denote multiple resources
+		for (String src : getSourceExpressions()) {
+			if (!isSourceRead(src)) {
+				readSource(src);
+			}
+		}
+	}
+
+	@Override
+	protected void readSource(String src) {
 		try (InputStream is = getClassLoader().getResource(
-				getSourceExpression()).openStream()) {
-			URL resource = getClassLoader().getResource(getSourceExpression());
-			if(isSourceRead(resource.toString())){
-//				continue;
+				src).openStream()) {
+			Properties props = new Properties();
+			URL resource = getClassLoader().getResource(
+					src);
+			if (isSourceRead(resource.toString())) {
+				// continue;
 				return;
 			}
 			addSource(resource.toString());
-			Properties props = new Properties();
+			Map<String, String> mi = new HashMap<String, String>();
+			mi.put("source", resource.toString());
+			if (Thread.currentThread().getContextClassLoader() != null) {
+				mi.put("classloader", Thread.currentThread()
+						.getContextClassLoader().toString());
+			}
 			props.load(is);
 			for (Map.Entry<Object, Object> en : props.entrySet()) {
-				addEntry(
-						en.getKey().toString(),
-						en.getValue().toString(),
-						getMetaInfo(en.getKey().toString(), en.getValue()
-								.toString()));
+				props.put(en.getKey().toString(),
+						en.getValue().toString());
+				propMetaInfo.put(en.getKey().toString(),
+						mi);
 			}
 		} catch (IOException e) {
 			addError(e);
@@ -56,7 +76,11 @@ public class PropertyFileConfigUnit extends ResourceConfigurationUnit {
 	}
 
 	protected Map<String, String> getMetaInfo(String key, String value) {
-		return null;
+		Map<String, String> mi = propMetaInfo.get(key);
+		if (mi != null) {
+			return mi;
+		}
+		return Collections.emptyMap();
 	}
 
 	private static ClassLoader getCurrentClassLoader() {
@@ -65,6 +89,16 @@ public class PropertyFileConfigUnit extends ResourceConfigurationUnit {
 			return PropertyFileConfigUnit.class.getClassLoader();
 		}
 		return cl;
+	}
+
+	@Override
+	public String getProperty(String key) {
+		return props.get(key);
+	}
+
+	@Override
+	public Map<String, String> getEntries() {
+		return Collections.unmodifiableMap(props);
 	}
 
 }
